@@ -41,8 +41,8 @@ smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = sm
 scene1 = False
 backstory = False
 level1 = False
-level2 = True
-level3 = False
+level2 = False
+level3 = True
 scene3 = False
 smoke_count = 0 
 fps = 60
@@ -51,7 +51,7 @@ pygame.display.set_caption("game")
 # area.create_world(area.list_world_3)
 list_create_world = []
 list_rect = []
-list_create_world, list_rect = area.create_world(area.list_world_2)
+list_create_world, list_rect = area.create_world(area.list_world_3)
 # area.create_world(area.list_world_2)
 # @profile
 def run_game():
