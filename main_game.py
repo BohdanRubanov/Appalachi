@@ -448,7 +448,7 @@ def run_game():
             for el in list_create_world:
                 el.blit_sprite(win)
             sprite.fire.blit_sprite(win)
-            sprite.fire.fire()
+            sprite.sprite.fire()
             sprite.door_3.blit_sprite(win)
             sprite.extinguisher.blit_sprite(win)
             sprite.panel.blit_sprite(win)

@@ -363,9 +363,11 @@ class Sprite(settings.Settings):
         elif self.DIRECTION == 'L':
             self.load_image(direction=True)
     def fire(self):
+        #if self.X <= fire.X + fire.WIDTH and self.X + self.WIDTH >= fire.X:
+            # if self.Y >= fire.Y and self.Y + self.HEIGHT - 10 <= fire.Y + fire.HEIGHT:
         if self.X <= fire.X + fire.WIDTH and self.X + self.WIDTH >= fire.X:
-            if self.Y >= fire.Y and self.Y + self.HEIGHT - 10 <= fire.Y + fire.HEIGHT:
-                print("012398")
+            # if self.Y + 30 >= fire.Y and self.Y + self.HEIGHT <= fire.Y + fire.HEIGHT + 30:
+                print("0000000")
             
     def shoot(self, win, count_while, sprite, list_rect):
             # global blit_bullet_count
@@ -443,7 +445,7 @@ arrow1 = Sprite(x = 700, y = 700, width = 100, height = 150, name_image = "game2
 arrow2 = Sprite(x = 50, y = 700, width = 100, height = 150, name_image = "game2/images/comix/arrow_2.png")
 page = Sprite(x = 50, y = 50, width = 700, height = 700, name_image = "game2/images/comix/page_1.png")
 black = Sprite(x = 0, y = 0, width = 800, height = 800, name_image = "game2/images/comix/black.png")
-fire = Sprite(x = 400, y = 60, width = 50, height = 50, name_image = "game2/images/fire.png")
+fire = Sprite(x = 400, y = 70, width = 80, height = 50, name_image = "game2/images/fire.png")
 door_3 = Sprite(x = 520, y = 600, width = 120, height = 120, name_image = "game2/images/door.png")
 extinguisher = Sprite(x = 400, y = 300, width = 50, height = 50, name_image = "game2/images/extinguisher.png")
 panel = Sprite(x = 500, y = 60, width = 120, height = 120, name_image = "game2/images/panel.png")
