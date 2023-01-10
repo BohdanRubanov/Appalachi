@@ -364,8 +364,8 @@ class Sprite(settings.Settings):
             self.load_image(direction=True)
     def fire(self):
         if self.X <= fire.X + fire.WIDTH and self.X + self.WIDTH >= fire.X:
-            # print("012398")
-            pass
+            print("012398")
+            
     def shoot(self, win, count_while, sprite, list_rect):
             # global blit_bullet_count
             global bullet1

@@ -41,8 +41,8 @@ smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = sm
 scene1 = False
 backstory = False
 level1 = False
-level2 = False
-level3 = True
+level2 = True
+level3 = False
 scene3 = False
 smoke_count = 0 
 fps = 60
@@ -51,7 +51,7 @@ pygame.display.set_caption("game")
 # area.create_world(area.list_world_3)
 list_create_world = []
 list_rect = []
-list_create_world, list_rect = area.create_world(area.list_world_3)
+list_create_world, list_rect = area.create_world(area.list_world_2)
 # area.create_world(area.list_world_2)
 # @profile
 def run_game():
@@ -80,11 +80,13 @@ def run_game():
     flag_black_pages = False
     page_num = 1
     flag_menu_light = True
+    black_count = 0
+    # print(black_count)
     # name_image_count = 0
     while game:
         # name_image_count += 1
         # if name_image_count <= 11:
-            
+        black_count += 1 
         last_medic_time_move += 1
         move_medic_count += 1
         # print(last_medic_time_move)
@@ -313,117 +315,120 @@ def run_game():
                 list_create_world, list_rect = area.create_world(area.list_world_2)
                 level1 = False
             pygame.display.flip()
-        if level2: 
-            # print(sprite.sprite_2.X)
+        if level2:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    game = False  
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    click = event.pos 
-                    print(click)
-            settings.bg.blit_sprite(win)
-            # area.create_world(area.list_world_2)
-            for el in list_create_world:
-                el.blit_sprite(win)
-            
-            
-            # sprite.sprite.can_move_down(area.list_rect)
-            sprite.sprite_2.move_sprite()
-            sprite.sprite_2.can_move_right(list_rect)
-            sprite.sprite_2.can_move_left(list_rect)
-            sprite.medic_bot.can_move_right(list_rect)
-            sprite.medic_bot.can_move_left(list_rect)
-            sprite.sprite_2.jump(list_rect)
-            sprite.sprite_2.blit_sprite(win)
-            sprite.sprite_2.gravity(list_rect= list_rect, sprite=1) 
-            sprite.medic_bot.blit_sprite(win)
-            sprite.medic_bot.medic_move()
-            sprite.sprite_2.medic_bot_collide()
-            sprite.medic_bot.shoot(win,50, sprite.sprite_2, list_rect = list_rect)
-            
-            # sprite.medic_bot.medic_move_screen()
-            # sprite.medic_bot.can_move_left(list_rect= area.list_rect)
-            # sprite.medic_bot.can_move_right(list_rect= area.list_rect)
-            # print(sprite.medic_bot.X)
-            sprite.medic_bot.gravity(list_rect= list_rect)
-            # sprite.bullet.blit_sprite(win)
-            # for i in range(1):
-            #     sprite.pistol_shoot.PISTOL_SHOOT.play()
-            # sprite.sprite_2.bullet()
-            # if bullet.flag_bullet_shoot == True:
-            #     music.pistol_shoot.PISTOL_SHOOT.play()
-            if bullet.flag_bullet_die == True:
-                level2 = False
-                scene1 = True
-            if move_medic_count == 150 and medic_left != 5 and move_medic_left == True:
-                # print(11111)
-                sprite.medic_bot.MEDIC_MOVE_LEFT = True
-                move_medic_count = -100
-                medic_left += 1
-            # else:
-            #     sprite.medic_bot.MEDIC_MOVE_LEFT = False
-            if medic_left == 2:
-                    sprite.medic_bot.MEDIC_MOVE_LEFT = False
-                    sprite.medic_bot.X = 0
-                    sprite.medic_bot.Y = 190
+                    if event.type == pygame.QUIT:
+                        game = False 
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        click = event.pos 
+                        print(click)
+            if black_count < 200:
+            # print(sprite.sprite_2.X)  
+                settings.bg.blit_sprite(win)
+                # area.create_world(area.list_world_2)
+                for el in list_create_world:
+                    el.blit_sprite(win)
+
+
+                # sprite.sprite.can_move_down(area.list_rect)
+                sprite.sprite_2.move_sprite()
+                sprite.sprite_2.can_move_right(list_rect)
+                sprite.sprite_2.can_move_left(list_rect)
+                sprite.medic_bot.can_move_right(list_rect)
+                sprite.medic_bot.can_move_left(list_rect)
+                sprite.sprite_2.jump(list_rect)
+                sprite.sprite_2.blit_sprite(win)
+                sprite.sprite_2.gravity(list_rect= list_rect, sprite=1) 
+                sprite.medic_bot.blit_sprite(win)
+                sprite.medic_bot.medic_move()
+                sprite.sprite_2.medic_bot_collide()
+                sprite.medic_bot.shoot(win,50, sprite.sprite_2, list_rect = list_rect)
+                # sprite.medic_bot.medic_move_screen()
+                # sprite.medic_bot.can_move_left(list_rect= area.list_rect)
+                # sprite.medic_bot.can_move_right(list_rect= area.list_rect)
                 # print(sprite.medic_bot.X)
-                # print(1)
-            if medic_left == 4:
-                if medic_left_count_1 != 1:
+                sprite.medic_bot.gravity(list_rect= list_rect)
+                # sprite.bullet.blit_sprite(win)
+                # for i in range(1):
+                #     sprite.pistol_shoot.PISTOL_SHOOT.play()
+                # sprite.sprite_2.bullet()
+                if bullet.flag_bullet_die == True:
+                    level2 = False
+                    scene1 = True
+                if move_medic_count == 150 and medic_left != 5 and move_medic_left == True:
+                    # print(11111)
+                    sprite.medic_bot.MEDIC_MOVE_LEFT = True
+                    move_medic_count = -100
+                    medic_left += 1
+                # else:
+                #     sprite.medic_bot.MEDIC_MOVE_LEFT = False
+                if medic_left == 2:
+                        sprite.medic_bot.MEDIC_MOVE_LEFT = False
+                        sprite.medic_bot.X = 0
+                        sprite.medic_bot.Y = 190
+                    # print(sprite.medic_bot.X)
+                    # print(1)
+                if medic_left == 4:
+                    if medic_left_count_1 != 1:
+                        sprite.medic_bot.MEDIC_MOVE_LEFT = False
+                        sprite.medic_bot.X = 0
+                        sprite.medic_bot.Y = 0
+                        medic_left_count_1 += 1
+                        move_medic_right = True
+                        medic_left = 0
+                        move_medic_left = False
+                if move_medic_count == 150 and medic_right != 6 and move_medic_right == True:
+                    medic_left_count_1 = 0
                     sprite.medic_bot.MEDIC_MOVE_LEFT = False
+                    # print(11111)
+                    sprite.medic_bot.MEDIC_MOVE_RIGHT = True
+                    move_medic_count = -100
+                    medic_right += 1
+                if medic_right == 1:
+                    if medic_right_count_1 != 1:
+                        # print(22222)
+                        sprite.medic_bot.MEDIC_MOVE_RIGHT = False
+                        sprite.medic_bot.X = 750
+                        sprite.medic_bot.Y = 70
+                        # sprite.medic_bot.gravity(list_rect= area.list_rect)
+                        # medic_right_count_1 += 1
+                    # print(sprite.medic_bot.X)
+                    # print(1)
+                if medic_right == 3:
+                    if medic_right_count_2 != 1:
+                        sprite.medic_bot.MEDIC_MOVE_RIGHT = False
+                        sprite.medic_bot.X = 750
+                        sprite.medic_bot.Y = 630
+                        medic_right_count_2 += 1
+                if medic_right == 5:
+                    if medic_right_count_3 != 1:
+                        sprite.medic_bot.MEDIC_MOVE_RIGHT = False
+                        sprite.medic_bot.X = 750
+                        sprite.medic_bot.Y = 190
+                        move_medic_left = True
+                        move_medic_count = 0
+                        medic_right = 0
+                        move_medic_right = False
+                        medic_right_count_3 += 1
+                if last_medic_time_move > 2250 and last_medic_time_move_count < 3:
                     sprite.medic_bot.X = 0
-                    sprite.medic_bot.Y = 0
-                    medic_left_count_1 += 1
-                    move_medic_right = True
-                    medic_left = 0
-                    move_medic_left = False
-            if move_medic_count == 150 and medic_right != 6 and move_medic_right == True:
-                medic_left_count_1 = 0
-                sprite.medic_bot.MEDIC_MOVE_LEFT = False
-                # print(11111)
-                sprite.medic_bot.MEDIC_MOVE_RIGHT = True
-                move_medic_count = -100
-                medic_right += 1
-            if medic_right == 1:
-                if medic_right_count_1 != 1:
-                    # print(22222)
-                    sprite.medic_bot.MEDIC_MOVE_RIGHT = False
-                    sprite.medic_bot.X = 750
-                    sprite.medic_bot.Y = 70
-                    # sprite.medic_bot.gravity(list_rect= area.list_rect)
-                    # medic_right_count_1 += 1
-                # print(sprite.medic_bot.X)
-                # print(1)
-            if medic_right == 3:
-                if medic_right_count_2 != 1:
-                    sprite.medic_bot.MEDIC_MOVE_RIGHT = False
-                    sprite.medic_bot.X = 750
-                    sprite.medic_bot.Y = 630
-                    medic_right_count_2 += 1
-            if medic_right == 5:
-                if medic_right_count_3 != 1:
-                    sprite.medic_bot.MEDIC_MOVE_RIGHT = False
-                    sprite.medic_bot.X = 750
-                    sprite.medic_bot.Y = 190
-                    move_medic_left = True
-                    move_medic_count = 0
-                    medic_right = 0
-                    move_medic_right = False
-                    medic_right_count_3 += 1
-            if last_medic_time_move > 2250 and last_medic_time_move_count < 3:
-                sprite.medic_bot.X = 0
-                sprite.medic_bot.Y = 660
-                last_medic_time_move = 0
-                last_medic_time_move_count += 1
-                if last_medic_time_move_count == 2:
-                    last_medic_time_move += 1800
-            if last_medic_time_move_count >= 3:
-                sprite.medic_escape.blit_sprite(win)
-            if sprite.flag_level_3:
-                # print(222222222222222)
-                level3 = True
-                list_create_world, list_rect = area.create_world(area.list_world_3)
-                level2 = False
+                    sprite.medic_bot.Y = 660
+                    last_medic_time_move = 0
+                    last_medic_time_move_count += 1
+                    if last_medic_time_move_count == 2:
+                        last_medic_time_move += 1800
+                if last_medic_time_move_count >= 3:
+                    sprite.medic_escape.blit_sprite(win)
+                if sprite.flag_level_3:
+                    # print(222222222222222)
+                    level3 = True
+                    list_create_world, list_rect = area.create_world(area.list_world_3)
+                    level2 = False
+            elif black_count >= 200 and black_count <= 250:
+                print(11111111)
+                sprite.black.blit_sprite(win)
+            else: 
+                black_count = 0
             pygame.display.flip()
             
         if level3:
