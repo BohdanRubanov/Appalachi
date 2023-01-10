@@ -33,12 +33,15 @@ class Bullet(settings.Settings):
                     if self.Y >= block.Y and self.Y + self.HEIGHT <= block.Y + block.HEIGHT:
                         print(33333333333333333)
                         self.MOVE_BULLET = False
+                        music.pistol_shoot.PISTOL_SHOOT.stop()
                         # flag_blit_bullet = False
                         break
                     else:
                         self.MOVE_BULLET = True
+                        music.pistol_shoot.PISTOL_SHOOT.play()
                 else:
                     self.MOVE_BULLET = True
+                    # music.pistol_shoot.PISTOL_SHOOT.play()
             if self.MOVE_BULLET:
                 # print("erhbhUIWRHOIQHOUE")
                 if sprite.X <= self.X + self.WIDTH and sprite.X + sprite.WIDTH >= self.X:
@@ -50,11 +53,14 @@ class Bullet(settings.Settings):
                         # print(6666666666666)
                         self.MOVE_BULLET = False
                         flag_bullet_die = True
+                        music.pistol_shoot.PISTOL_SHOOT.stop()
             if self.X <= 0:
                 self.MOVE_BULLET = False
+                music.pistol_shoot.PISTOL_SHOOT.stop()
                 # print(4444444444444)
             if self.X >= 800:
                 self.MOVE_BULLET = False
+                music.pistol_shoot.PISTOL_SHOOT.stop()
     
                 # print(55555555555)
 

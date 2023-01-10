@@ -364,9 +364,8 @@ class Sprite(settings.Settings):
             self.load_image(direction=True)
     def fire(self):
         if self.X <= fire.X + fire.WIDTH and self.X + self.WIDTH >= fire.X:
-            if self.Y >= fire.Y and self.Y + self.HEIGHT - 10 <= fire.Y + fire.HEIGHT:
-                print("012398")
-            
+            print("012398")
+        pass
     def shoot(self, win, count_while, sprite, list_rect):
             # global blit_bullet_count
             global bullet1
@@ -380,6 +379,7 @@ class Sprite(settings.Settings):
             #     derection = -1
             #     width = 0
             # if bullet.flag_blit_bullet:
+            
             if self.COUNT_BULLET % count_while == 2 and len(self.LIST_BULLET) < 1:
                 # print(1)
                 
@@ -425,7 +425,7 @@ class Sprite(settings.Settings):
                     if bullet1.MOVE_BULLET == False:
                         # print(22222222222)
                         self.LIST_BULLET.remove(bullet1)   
-                    music.pistol_shoot.PISTOL_SHOOT.play()
+                    
                 
 
 
