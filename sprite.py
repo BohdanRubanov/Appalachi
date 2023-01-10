@@ -363,11 +363,11 @@ class Sprite(settings.Settings):
         elif self.DIRECTION == 'L':
             self.load_image(direction=True)
     def fire(self):
-        #if self.X <= fire.X + fire.WIDTH and self.X + self.WIDTH >= fire.X:
-            # if self.Y >= fire.Y and self.Y + self.HEIGHT - 10 <= fire.Y + fire.HEIGHT:
-        if self.X <= fire.X + fire.WIDTH and self.X + self.WIDTH >= fire.X:
-            print("012398")
-        pass
+         if self.X <= fire.X + fire.WIDTH and self.X + self.WIDTH >= fire.X:
+            # print(222222222222222)
+            if self.Y + 30 >= fire.Y and self.Y + self.HEIGHT <= fire.Y + fire.HEIGHT + 30:
+                # print("012398")
+                pass
     def shoot(self, win, count_while, sprite, list_rect):
             # global blit_bullet_count
             global bullet1
@@ -448,4 +448,4 @@ black = Sprite(x = 0, y = 0, width = 800, height = 800, name_image = "game2/imag
 fire = Sprite(x = 400, y = 70, width = 80, height = 50, name_image = "game2/images/fire.png")
 door_3 = Sprite(x = 520, y = 600, width = 120, height = 120, name_image = "game2/images/door.png")
 extinguisher = Sprite(x = 400, y = 300, width = 50, height = 50, name_image = "game2/images/extinguisher.png")
-panel = Sprite(x = 500, y = 60, width = 120, height = 120, name_image = "game2/images/panel.png")
+panel = Sprite(x = 535, y = 66, width = 50, height = 50, name_image = "game2/images/panel.png")

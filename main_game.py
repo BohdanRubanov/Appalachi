@@ -41,11 +41,13 @@ smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = sm
 scene1 = False
 backstory = False
 level1 = False
-level2 = True
-level3 = False
+level2 = False
+level3 = True
 scene3 = False
 smoke_count = 0 
 fps = 60
+music.menu_background_sound.load()
+music.menu_background_sound.play(repeat=-1)
 win = pygame.display.set_mode((dicts.SETTINGS_WIN["WIDTH"], dicts.SETTINGS_WIN["HEIGHT"]))
 pygame.display.set_caption("game")
 # area.create_world(area.list_world_3)
@@ -82,6 +84,7 @@ def run_game():
     flag_menu_light = True
     # name_image_count = 0
     while game:
+
         # name_image_count += 1
         # if name_image_count <= 11:
             
@@ -97,7 +100,6 @@ def run_game():
         global level3
         # for event in pygame.event.get():
         if scene1: #пажасата заработай  
-            music.menu_background_sound.MENU_BACKGROUND_SOUND.play()
             menu_count += 1
             # print(flag_menu_light)
             if menu_count == 5:
@@ -138,8 +140,10 @@ def run_game():
                     if settings.play.RECT.collidepoint(click):
                         # print(1)
                         level1 = True
-                        music.menu_background_sound.MENU_BACKGROUND_SOUND.stop()
-                        music.level1_background_sound.LEVEL1_BACKGROUND_SOUND.play()
+                        music.menu_background_sound.stop()
+                        music.menu_background_sound.unload()
+                        music.level1_background_sound.load()
+                        music.level1_background_sound.play(repeat=-1)
                         list_create_world, list_rect = area.create_world(area.list_world_1)
                         
                         scene1 = False
@@ -197,7 +201,7 @@ def run_game():
             settings.exit.blit_sprite(win)                
             # print(list_create_world)   
             # print(settings.play.IMAGE)
-            pygame.display.flip()
+        
         
         
         
@@ -233,13 +237,14 @@ def run_game():
                     sprite.page.NAME_IMAGE = f"game2/images/comix/page_{page_num}.png"  
                     sprite.page.load_image()
                 # sprite.page.blit_sprite(win)  
-            pygame.display.flip() 
+         
             
             
             
             
         if level1:
-            music.level1_background_sound.LEVEL1_BACKGROUND_SOUND.play() 
+            # music.level1_background_sound.load()
+            # music.level1_background_sound.play(repeat = -1) 
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     click = event.pos
@@ -307,22 +312,32 @@ def run_game():
                         smoke_x = 0
                         smoke_y = 750
 
-                        music.die_smoke_version.DIE_SMOKE_VERSION.play()
+                        # music.die_smoke_version.play()
                         level1 = False
                         scene1 = True
-                        music.level1_background_sound.LEVEL1_BACKGROUND_SOUND.stop()
-                        music.menu_background_sound.MENU_BACKGROUND_SOUND.play()
+                        music.level1_background_sound.stop()
+                        music.level1_background_sound.unload()
+                        music.die_smoke_version.play()
+                        music.menu_background_sound.load()
+                        music.menu_background_sound.play(repeat=-1)
                         smoke_count = 0
                         print("touch")
+            event = pygame.key.get_pressed()
             if sprite.sprite.EXIT_DOOR:
                 level2 = True
                 list_create_world, list_rect = area.create_world(area.list_world_2)
+                music.level1_background_sound.stop()
+                music.level1_background_sound.unload()
+                # print(pygame.mixer.music.get_busy())
+                # music.level2_background_sound.load()
+                # music.level2_background_sound.play(repeat=-1)
+                # print("edrdees")
                 level1 = False
-                music.level1_background_sound.LEVEL1_BACKGROUND_SOUND.stop()
-                music.level2_background_sound.LEVEL2_BACKGROUND_SOUND.play()
-            pygame.display.flip()
         if level2: 
-            music.level2_background_sound.LEVEL2_BACKGROUND_SOUND.play()
+            if not pygame.mixer.music.get_busy():
+                music.level2_background_sound.load()
+                music.level2_background_sound.play(repeat=-1)
+            # music.level2_background_sound.play()
             # print(sprite.sprite_2.X)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -364,8 +379,12 @@ def run_game():
             if bullet.flag_bullet_die == True:
                 level2 = False
                 scene1 = True
-                music.level2_background_sound.LEVEL2_BACKGROUND_SOUND.stop()
-                music.menu_background_sound.MENU_BACKGROUND_SOUND.play()
+                
+                music.level2_background_sound.stop()
+                music.level2_background_sound.unload()
+                music.menu_background_sound.load()
+                music.menu_background_sound.play(repeat=-1)
+            # print(move_medic_count)
             if move_medic_count == 150 and medic_left != 5 and move_medic_left == True:
                 # print(11111)
                 sprite.medic_bot.MEDIC_MOVE_LEFT = True
@@ -430,13 +449,16 @@ def run_game():
                     last_medic_time_move += 1800
             if last_medic_time_move_count >= 3:
                 sprite.medic_escape.blit_sprite(win)
+            if move_medic_count > 151:
+                move_medic_count = 0
             if sprite.flag_level_3:
                 # print(222222222222222)
                 level3 = True
                 list_create_world, list_rect = area.create_world(area.list_world_3)
                 level2 = False
-                music.level2_background_sound.LEVEL2_BACKGROUND_SOUND.stop()
-            pygame.display.flip()
+                music.level2_background_sound.stop()
+                music.level2_background_sound.unload()
+        
             
         if level3:
             
@@ -455,7 +477,7 @@ def run_game():
             for el in list_create_world:
                 el.blit_sprite(win)
             sprite.fire.blit_sprite(win)
-            sprite.sprite.fire()
+            sprite.sprite_3.fire()
             sprite.door_3.blit_sprite(win)
             sprite.extinguisher.blit_sprite(win)
             sprite.panel.blit_sprite(win)
@@ -467,7 +489,7 @@ def run_game():
             sprite.sprite_3.gravity(list_rect= list_rect, sprite=1) 
             
             
-            pygame.display.flip()
+        
             
         if scene3:
             settings.bg_developers.blit_sprite(win)
@@ -483,6 +505,6 @@ def run_game():
                         settings.back = settings.Settings(x = 715,y = 0, width = 75, height = 45,name_image = "game2/images/back.png")
                     if not settings.back.RECT.collidepoint(event.pos):
                         settings.back = settings.Settings(x = 700,y = 0, width = 100, height = 50,name_image = "game2/images/back.png")
-            pygame.display.flip()
+        pygame.display.flip()
         clock.tick(fps)      
 run_game() 
