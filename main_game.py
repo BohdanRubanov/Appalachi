@@ -151,9 +151,8 @@ def run_game():
                 settings.bg_menu.load_image()
                 flag_menu_light = False
                 menu_count = 0 #Змінення значення лічильника меню на 0, із-за чого анімація починається знову
-            
-            #Змінна яка записує у себе координати кліку ігрока
-            mouse_pos = pygame.mouse.get_pos()
+                
+            mouse_pos = pygame.mouse.get_pos() #Змінна яка записує у себе координати кліку ігрока
             #Цикл всіх івентів у меню
             for event in pygame.event.get():
                 #Умова виходу з гри при натисненні хрестику
