@@ -7,13 +7,17 @@ import area
 import sprite
 import music
 import bullet
+
 pygame.init()
+
+#Списики з шляхами до об'єктів меню
 images_list1 = []
 images_list = ["game2/images/play_1.png", "game2/images/play_light.png",
                     "game2/images/developer_light.png",
                     "game2/images/exit_1.png", "game2/images/exit_light.png",
                     "game2/images/play.png", "game2/images/developers_1.png", "game2/images/developers.png",
                     "game2/images/exit.png"]
+#Функція яка загружає картинки до об'єктів меню
 def load_name_image(name):
     for image in images_list:
         if image == f"game2/images/{name}.png":
@@ -22,75 +26,93 @@ def load_name_image(name):
             image = pygame.image.load(path_image)
             image = pygame.transform.scale(image, (800,800))
             return image
+#Картинки кнопки play (грати) у меню
 image_play = load_name_image("play")
-# print(image_play)
-# print(settings.play.NAME_IMAGE)
 image_play_1 = load_name_image("play_1")
 image_play_light = load_name_image("play_light")
+#Картинки кнопки developers (розробники) у меню
 image_developers = load_name_image("developers")
 image_developers_1 = load_name_image("developers_1")
 image_developers_light = load_name_image("developer_light")
+#Картинки кнопки exit (вийти) у меню
 image_exit = load_name_image("exit")
 image_exit_1 = load_name_image("exit_1")
 image_exit_light = load_name_image("exit_light")
+#Змінні щ параметрами  об'єкту диму
 smoke_width = 50
 smoke_height = 50
 smoke_x = 0
 smoke_y = 750
+#Создання об'єкт диму
 smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
-scene1 = False
-backstory = False
-level1 = False
-level2 = False
-level3 = True
-scene3 = False
+#Змінні які відповідають за те, яка сцена або рівень на екрані
+scene1 = False #Меню
+backstory = False #Початкова предисторія
+level1 = False #1 рівень
+level2 = False #2 рівень
+level3 = True #3 рівень
+scene3 = False #Розробники
+#Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
+#Заданий ФПС гри
 fps = 60
-music.menu_background_sound.load()
-music.menu_background_sound.play(repeat=-1)
+#тимчасова музика для 3 рівня
+# music.menu_background_sound.load()
+# music.menu_background_sound.play(repeat=-1)
+#Создавання об'єкту вікна гри
 win = pygame.display.set_mode((dicts.SETTINGS_WIN["WIDTH"], dicts.SETTINGS_WIN["HEIGHT"]))
+#Задання назви вікну гри
 pygame.display.set_caption("game")
-# area.create_world(area.list_world_3)
+#Все те що відноситься до матриці
 list_create_world = []
 list_rect = []
 list_create_world, list_rect = area.create_world(area.list_world_3)
 # area.create_world(area.list_world_2)
 # @profile
+#Головна функція гри у якій міститься майже все
 def run_game():
+    #Робимо потрібні функції локальні змінні глобальними
     global list_create_world
     global list_rect
     global smoke
     global scene1
     global level1
     global scene3
-    # global level2
-    menu_count = 0
-    clock = pygame.time.Clock()
+    
+    #Лічильники
+    menu_count = 0#Лічильник для анімацій у меню
     move_medic_count = 0
-    medic_left = 0
-    game = True
     medic_left_count_1 = 0
-    medic_right = 0
     medic_right_count_1 = 0
     medic_right_count_2 = 0
     medic_right_count_3 = 0
+    # name_image_count = 0
+    last_medic_time_move_count = 0
+    #Флаги
+    flag_menu_light = True
+    flag_black_pages = False
+    #Змінна відповідальна за ФПС у грі
+    clock = pygame.time.Clock()
+    #Головна змінна гри
+    game = True
+    #Змінні які відповідальні за переміщення медика по мапі 2 рівня
+    medic_left = 0
+    medic_right = 0
     move_medic_right = False
     move_medic_left = True
     last_medic_time_move = 0
-    last_medic_time_move_count = 0
+    #Змінна відповідальна за переход зі сторінки на сторінку у предисторії
     pages_time_black_time = 0
-    flag_black_pages = False
+    #Змінна яка говорить про те яка зараз відкрита сторінка
     page_num = 1
-    flag_menu_light = True
-    # name_image_count = 0
-    while game:
 
-        # name_image_count += 1
-        # if name_image_count <= 11:
-            
+    #Головний цикл гри у якому міститься майже все
+    while game:
+        #Медик починає рух
         last_medic_time_move += 1
+        #Лічильнік починає лічити до того значення на якому медик зупиниться
         move_medic_count += 1
-        # print(last_medic_time_move)
+        #Робимо потрібні циклу локальні змінні глобальними
         global smoke_x
         global smoke_y
         global smoke_height
@@ -98,53 +120,57 @@ def run_game():
         global smoke_count
         global level2
         global level3
-        # for event in pygame.event.get():
-        if scene1: #пажасата заработай  
+
+        #Умова за якою відкривається меню гри
+        if scene1:
+            #Лічильник меню починає лічити за для того щоб почала роботу анімація
             menu_count += 1
-            # print(flag_menu_light)
+            #Перша картинка в анімації фону меню
             if menu_count == 5:
-                settings.bg_menu.NAME_IMAGE = "game2/images/bg_menu_1.png"
-                settings.bg_menu.load_image()
+                settings.bg_menu.NAME_IMAGE = "game2/images/bg_menu_1.png" #Зміна картинки нової свойства
+                settings.bg_menu.load_image() #Завантаження картинки нової свойства
                 flag_menu_light = True
+            #Друга картинка в анімації фону меню
             if menu_count == 10:
                 settings.bg_menu.NAME_IMAGE = "game2/images/bg_menu_2.png"
-                settings.bg_menu.load_image()
+                settings.bg_menu.load_image() 
                 flag_menu_light = True
+            #Третя картинка в анімації фону меню
             if menu_count == 15:
                 settings.bg_menu.NAME_IMAGE = "game2/images/bg_menu_3.png"
-                settings.bg_menu.load_image()
+                settings.bg_menu.load_image() 
                 flag_menu_light = True
+            #Четверта картинка в анімації фону меню
             if menu_count == 20:
                 settings.bg_menu.NAME_IMAGE = "game2/images/bg_menu_4.png"
-                settings.bg_menu.load_image()
+                settings.bg_menu.load_image() 
                 flag_menu_light = False
+            #П'ята картинка в анімації фону меню
             if menu_count == 25:
                 settings.bg_menu.NAME_IMAGE = "game2/images/bg_menu_5.png"
                 settings.bg_menu.load_image()
                 flag_menu_light = False
-                menu_count = 0
-            # settings.exit.draw_rect(win)
-            # settings.play.draw_rect(win)
-            # settings.developers.draw_rect(win)
-            # settings.exit.draw_rect(win)
-            # for event in pygame.event.get():
-            #     if event.type == pygame.QUIT:
-            #         game = False  
+                menu_count = 0 #Змінення значення лічильника меню на 0, із-за чого анімація починається знову
+            
+            #Змінна яка записує у себе координати кліку ігрока
             mouse_pos = pygame.mouse.get_pos()
+            #Цикл всіх івентів у меню
             for event in pygame.event.get():
+                #Умова виходу з гри при натисненні хрестику
                 if event.type == pygame.QUIT:
                     game = False  
+                #Умова дій при натисненні на якусь частину екрану меню
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    click = event.pos 
-                    print(click)
+                    click = event.pos #Змінна яка записує у себе координати натиснення ігрока
+                    print(click) #Виведення координат натиснення ігрока
+                    #Умова відкриття 1 рівня при натисненні на кнопку play 
                     if settings.play.RECT.collidepoint(click):
-                        # print(1)
-                        level1 = True
-                        music.menu_background_sound.stop()
-                        music.menu_background_sound.unload()
-                        music.level1_background_sound.load()
-                        music.level1_background_sound.play(repeat=-1)
-                        list_create_world, list_rect = area.create_world(area.list_world_1)
+                        level1 = True #Змінна яка робить level1 дійсним за допомогою чого запускається 1 рівень
+                        music.menu_background_sound.stop() #Зупинення музику у меню
+                        music.menu_background_sound.unload() #Видалення музику у меню з гри на тей час поки в неї нема потреби
+                        music.level1_background_sound.load() #Загрузка музики 1 рівня
+                        music.level1_background_sound.play(repeat=-1) #Початок гри музики 1 рівня
+                        list_create_world, list_rect = area.create_world(area.list_world_1) #Создавання матриці 1 рівня
                         
                         scene1 = False
                     if settings.exit.RECT.collidepoint(click):
@@ -274,7 +300,7 @@ def run_game():
             # sprite.sprite.draw_rect(win)
             if sprite.door.IMAGE != None:
                 sprite.door.blit_sprite(win)
-            sprite.sprite.door_collide()
+            sprite.sprite.door_collide(sprite.door)
             sprite.door_exit.blit_sprite(win)
             sprite.sprite.door_exit_collide()
             # sprite.door.open_door()
@@ -461,7 +487,6 @@ def run_game():
         
             
         if level3:
-            
             for event in pygame.event.get():
                if event.type == pygame.QUIT:
                    game = False  
@@ -476,14 +501,28 @@ def run_game():
             settings.bg.blit_sprite(win)
             for el in list_create_world:
                 el.blit_sprite(win)
-            sprite.fire1.blit_sprite(win)
-            sprite.fire2.blit_sprite(win)
-            sprite.fire3.blit_sprite(win)
-            sprite.fire4.blit_sprite(win)
-            sprite.fire5.blit_sprite(win)
-            sprite.fire6.blit_sprite(win)
-            sprite.fire7.blit_sprite(win)
-            sprite.sprite_3.fire()
+            # print(sprite.fire7.BLIT_FIRE_7)
+            if sprite.sprite_3.BLIT_FIRE_1:
+                sprite.fire1.blit_sprite(win)
+            if sprite.sprite_3.BLIT_FIRE_2:
+                sprite.fire2.blit_sprite(win)
+            if sprite.sprite_3.BLIT_FIRE_3:
+                sprite.fire3.blit_sprite(win)
+            if sprite.sprite_3.BLIT_FIRE_4:
+                sprite.fire4.blit_sprite(win)
+            if sprite.sprite_3.BLIT_FIRE_5:
+                sprite.fire5.blit_sprite(win)
+            if sprite.sprite_3.BLIT_FIRE_6:
+                sprite.fire6.blit_sprite(win)
+            if sprite.sprite_3.BLIT_FIRE_7:
+                sprite.fire7.blit_sprite(win)
+            sprite.sprite_3.fire(sprite.fire1, 1)
+            sprite.sprite_3.fire(sprite.fire2, 2)
+            sprite.sprite_3.fire(sprite.fire3, 3)
+            sprite.sprite_3.fire(sprite.fire4, 4)
+            sprite.sprite_3.fire(sprite.fire5, 5)
+            sprite.sprite_3.fire(sprite.fire6, 6)
+            sprite.sprite_3.fire(sprite.fire7, 7)
             sprite.door_3.blit_sprite(win)
             sprite.extinguisher.blit_sprite(win)
             sprite.panel.blit_sprite(win)
@@ -493,10 +532,11 @@ def run_game():
             sprite.sprite_3.jump(list_rect)
             sprite.sprite_3.blit_sprite(win)
             sprite.sprite_3.gravity(list_rect= list_rect, sprite=1) 
-            sprite.panel.panel_collide()
-            sprite.extinguisher.extinguisher_collide()
+            sprite.sprite_3.panel_collide()
+            sprite.sprite_3.extinguisher_collide()
+            sprite.sprite_3.door_collide(sprite.door_3)
             
-            
+        
             
         
             
