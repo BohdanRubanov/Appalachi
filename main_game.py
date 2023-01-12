@@ -1,4 +1,4 @@
-from profilehooks import profile
+#from profilehooks import profile
 import pygame 
 import os
 import dicts 
@@ -487,6 +487,9 @@ def run_game():
             sprite.sprite_3.jump(list_rect)
             sprite.sprite_3.blit_sprite(win)
             sprite.sprite_3.gravity(list_rect= list_rect, sprite=1) 
+            sprite.panel.panel_collide()
+            sprite.extinguisher.extinguisher_collide()
+            
             
             
         

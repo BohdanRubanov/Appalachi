@@ -368,6 +368,31 @@ class Sprite(settings.Settings):
             if self.Y + 30 >= fire.Y and self.Y + self.HEIGHT <= fire.Y + fire.HEIGHT + 30:
                 # print("012398")
                 pass
+    def panel_collide(self):
+    #    if self.X <= panel.X + panel.WIDTH and self.X + self.WIDTH >= panel.X:
+    #        print("123")
+    #        if self.Y + 30 >= panel.Y and self.Y + self.HEIGHT <= panel.Y + panel.HEIGHT + 30:
+    #            #print("123")
+    #            pass
+        event = pygame.key.get_pressed()
+        if self.X + self.WIDTH <= panel.X + panel.WIDTH + 20 and self.X + 20 >= panel.X:
+            if self.Y + 21 >= panel.Y and self.Y + self.HEIGHT <= panel.Y + panel.HEIGHT + 20:
+                self.draw_text(win, "E")
+                if event[pygame.K_e]:
+                  print("321")
+    
+    def extinguisher_collide(self):
+        #if self.X <= extinguisher.X + extinguisher.WIDTH and self.X + self.WIDTH >= extinguisher.X:
+        #    print("123")
+        #    if self.Y + 30 >= extinguisher.Y and self.Y + self.HEIGHT <= extinguisher.Y + extinguisher.HEIGHT + 30:
+        #        print("321")
+        #        pass
+        event = pygame.key.get_pressed()
+        if self.X + self.WIDTH <= extinguisher.X + extinguisher.WIDTH + 20 and self.X + 20 >= extinguisher.X:
+            if self.Y + 21 >= extinguisher.Y and self.Y + self.HEIGHT <= extinguisher.Y + extinguisher.HEIGHT + 20:
+                self.draw_text(win, "E")
+                if event[pygame.K_e]:
+                  print("123")
     def shoot(self, win, count_while, sprite, list_rect):
             # global blit_bullet_count
             global bullet1
