@@ -43,6 +43,7 @@ class Sprite(settings.Settings):
         self.DIRECTION = "R"
         self.SPEED_ANIMATION = 0
         self.COUNT_IMG = 3
+        self.COUNT_FIRE_POSITION = 0
     def move_sprite(self):
             event = pygame.key.get_pressed()
             if event[pygame.K_RIGHT] and self.X + self.WIDTH <= dicts.SETTINGS_WIN["WIDTH"]:
@@ -231,7 +232,7 @@ class Sprite(settings.Settings):
             #         self.ACTIVE_GRAVITY = True
     def draw_text(self, win, key):
         font = pygame.font.SysFont("kokila", 20)
-        follow = font.render(f"нажмите {key} что бы взаимодействовать с предметами!", 1, (0,0,0))
+        follow = font.render(f"Натисніть {key} щоб взаємодіяти з предметами!", 1, (0,0,0))
         win.blit(follow, (100, 200))
 
     def lever_collide(self, win):
@@ -363,11 +364,33 @@ class Sprite(settings.Settings):
         elif self.DIRECTION == 'L':
             self.load_image(direction=True)
     def fire(self):
-         if self.X <= fire.X + fire.WIDTH and self.X + self.WIDTH >= fire.X:
+        global fire1
+        global fire2
+        global fire3
+        global fire4
+        global fire5
+        global fire6
+        global fire7
+        self.COUNT_FIRE_POSITION += 1
+        if self.X <= fire1.X + fire1.WIDTH and self.X + self.WIDTH >= fire1.X:
             # print(222222222222222)
-            if self.Y + 30 >= fire.Y and self.Y + self.HEIGHT <= fire.Y + fire.HEIGHT + 30:
+            if self.Y + 30 >= fire1.Y and self.Y + self.HEIGHT <= fire1.Y + fire1.HEIGHT + 30:
                 # print("012398")
                 pass
+        if self.COUNT_FIRE_POSITION == 50:
+            fire1 = Sprite(x = 400, y = 70, width = 80, height = 50, name_image = "game2/images/fire.png")
+        if self.COUNT_FIRE_POSITION == 100:
+            fire2 = Sprite(x = 720, y = 670, width = 80, height = 50, name_image = "game2/images/fire.png")
+        if self.COUNT_FIRE_POSITION == 150:
+            fire3 = Sprite(x = 0, y = 670, width = 80, height = 50, name_image = "game2/images/fire.png")
+        if self.COUNT_FIRE_POSITION == 200:
+            fire4 = Sprite(x = 100, y = 490, width = 80, height = 50, name_image = "game2/images/fire.png")
+        if self.COUNT_FIRE_POSITION == 250:
+            fire5 = Sprite(x = 100, y = 250, width = 80, height = 50, name_image = "game2/images/fire.png")
+        if self.COUNT_FIRE_POSITION == 300:
+            fire6 = Sprite(x = 720, y = 490, width = 80, height = 50, name_image = "game2/images/fire.png")
+        if self.COUNT_FIRE_POSITION == 350:
+            fire7 = Sprite(x = 400, y = 670, width = 80, height = 50, name_image = "game2/images/fire.png")
     def shoot(self, win, count_while, sprite, list_rect):
             # global blit_bullet_count
             global bullet1
@@ -445,7 +468,15 @@ arrow1 = Sprite(x = 700, y = 700, width = 100, height = 150, name_image = "game2
 arrow2 = Sprite(x = 50, y = 700, width = 100, height = 150, name_image = "game2/images/comix/arrow_2.png")
 page = Sprite(x = 50, y = 50, width = 700, height = 700, name_image = "game2/images/comix/page_1.png")
 black = Sprite(x = 0, y = 0, width = 800, height = 800, name_image = "game2/images/comix/black.png")
-fire = Sprite(x = 400, y = 70, width = 80, height = 50, name_image = "game2/images/fire.png")
+#3 лвл. Вогонь
+fire1 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
+fire2 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
+fire3 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
+fire4 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
+fire5 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
+fire6 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
+fire7 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
+
 door_3 = Sprite(x = 520, y = 600, width = 120, height = 120, name_image = "game2/images/door.png")
 extinguisher = Sprite(x = 400, y = 300, width = 50, height = 50, name_image = "game2/images/extinguisher.png")
 panel = Sprite(x = 535, y = 66, width = 50, height = 50, name_image = "game2/images/panel.png")
