@@ -441,7 +441,8 @@ class Sprite(settings.Settings):
             if self.Y + 21 >= panel.Y and self.Y + self.HEIGHT <= panel.Y + panel.HEIGHT + 20:
                 self.draw_text(win, "E")
                 if event[pygame.K_e]:
-                  print("321")
+                   scene4 = True
+                   door_3 = Sprite(x = 520, y = 600, width = 120, height = 120, name_image = "game2/images/fire.png")
     
     def extinguisher_collide(self):
         #if self.X <= extinguisher.X + extinguisher.WIDTH and self.X + self.WIDTH >= extinguisher.X:

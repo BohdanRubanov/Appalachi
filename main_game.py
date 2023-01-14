@@ -52,6 +52,7 @@ level1 = False #1 рівень
 level2 = False #2 рівень
 level3 = True #3 рівень
 scene3 = False #Розробники
+scene4 = False #черный экран
 #Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
 #Заданий ФПС гри
@@ -105,7 +106,7 @@ def run_game():
     pages_time_black_time = 0
     #Змінна яка говорить про те яка зараз відкрита сторінка
     page_num = 1
-
+    black = pygame.image.load('black.jpg')
     #Головний цикл гри у якому міститься майже все
     while game:
         #Медик починає рух
@@ -120,7 +121,8 @@ def run_game():
         global smoke_count
         global level2
         global level3
-
+        if scene4:
+            win.blit((black, 0,0))
         #Умова за якою відкривається меню гри
         if scene1:
             #Лічильник меню починає лічити за для того щоб почала роботу анімація
