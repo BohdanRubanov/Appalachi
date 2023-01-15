@@ -61,5 +61,3 @@ level2_background_sound = Music('sounds/level2_background_song.wav', 0.5)
 
 
 
-
-

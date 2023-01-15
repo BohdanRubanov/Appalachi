@@ -32,12 +32,14 @@ class Settings:
 
     def blit_sprite(self,win):
         win.blit(self.IMAGE, (self.X,self.Y))
+        # print(111111)
 
 
     def draw_rect(self, win):
             pygame.draw.rect(win, self.COLOR, self.RECT)
 
 bg = Settings(x = 0,y = 0, width = 800, height = 800,name_image = "game2/images/bg.png")
+bg_pipes = Settings(x = 0,y = 0, width = 800, height = 800,name_image = "game2/images/pipes/bg_pipes.png")
 bg_menu = Settings(x = 0,y = 0, width = 800, height = 800,name_image = "game2/images/bg_menu_1.png")
 
 play = Settings(color =(255,0,0), x = 0,y = 0, width = 800, height = 800,name_image = "game2/images/play.png")

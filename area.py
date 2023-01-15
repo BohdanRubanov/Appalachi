@@ -102,4 +102,3 @@ def create_world(level):
         x = 0
         y += world_h
     return list_create_world, list_rect
-
