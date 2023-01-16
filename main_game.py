@@ -139,7 +139,7 @@ def run_game():
         global scene4
         if sprite.sprite_3.SCENE4:
             scene4 = True
-        
+        scene4 = True
         #Умова за якою відкривається меню гри
         if scene1:
             #Лічильник меню починає лічити за для того щоб почала роботу анімація
@@ -350,8 +350,8 @@ def run_game():
             y = sprite.sprite.Y
             sprite_cor = x,y
             #Умова програшу від диму
-            if sprite.sprite.X + sprite.sprite.WIDTH <= smoke.X + smoke.WIDTH + 20 and sprite.sprite.X + 20 >= smoke.X:
-                if sprite.sprite.Y + 21 >= smoke.Y and sprite.sprite.Y + sprite.sprite.HEIGHT <= smoke.Y + smoke.HEIGHT + 20:
+            if sprite.sprite.X + sprite.sprite.WIDTH <= smoke_x + smoke_width + 20 and sprite.sprite.X + 20 >= smoke_x:
+                if sprite.sprite.Y + 21 >= smoke_y and sprite.sprite.Y + sprite.sprite.HEIGHT <= smoke_y + smoke_height + 20:
                     if sprite.sprite.MASK_ON == True:
                         print(22222222222)
                         # pass
