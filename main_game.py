@@ -48,11 +48,11 @@ smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = sm
 #Змінні які відповідають за те, яка сцена або рівень на екрані
 scene1 = False #Меню
 backstory = False #Початкова предисторія
-level1 = False #1 рівень
+level1 = True #1 рівень
 level2 = False #2 рівень
 level3 = False #3 рівень
 scene3 = False #Розробники
-scene4 = True #черный экран
+scene4 = False #черный экран
 #Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
 #Заданий ФПС гри
@@ -71,7 +71,7 @@ list_rect_pipes = []
 list_create_world = []
 list_rect = []
 list_pipes, list_rect_pipes = tubings.create_world(tubings.list_pipe_matrix)
-list_create_world, list_rect = area.create_world(area.list_world_3)
+list_create_world, list_rect = area.create_world(area.list_world_1)
 # area.create_world(area.list_world_2)
 # @profile
 #Головна функція гри у якій міститься майже все
