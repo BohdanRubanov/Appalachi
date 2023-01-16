@@ -139,7 +139,7 @@ def run_game():
         #global smoke_width
         if sprite.sprite_3.SCENE4:
             scene4 = True
-        
+        scene4 = True
         #Умова за якою відкривається меню гри
         if scene1:
             #Лічильник меню починає лічити за для того щоб почала роботу анімація
