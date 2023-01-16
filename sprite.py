@@ -53,6 +53,15 @@ class Sprite(settings.Settings):
         self.BLIT_FIRE_6 = True
         self.BLIT_FIRE_7 = True
         self.SCENE4 = False
+        self.COUNT_FIRE_POSITION = 0
+        self.EXTING_ON = False
+        self.BLIT_FIRE_1 = True
+        self.BLIT_FIRE_2 = True
+        self.BLIT_FIRE_3 = True
+        self.BLIT_FIRE_4 = True
+        self.BLIT_FIRE_5 = True
+        self.BLIT_FIRE_6 = True
+        self.BLIT_FIRE_7 = True
     def move_sprite(self):
             event = pygame.key.get_pressed()
             if event[pygame.K_RIGHT] and self.X + self.WIDTH <= dicts.SETTINGS_WIN["WIDTH"]:
@@ -445,7 +454,6 @@ class Sprite(settings.Settings):
                    print(1111111111)
                    self.SCENE4 = True
                 #    door_3 = Sprite(x = 520, y = 600, width = 120, height = 120, name_image = "game2/images/fire.png")
-    
     def extinguisher_collide(self):
         #if self.X <= extinguisher.X + extinguisher.WIDTH and self.X + self.WIDTH >= extinguisher.X:
         #    print("123")
