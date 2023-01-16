@@ -52,7 +52,7 @@ level1 = True #1 рівень
 level2 = False #2 рівень
 level3 = False #3 рівень
 scene3 = False #Розробники
-scene4 = False #черный экран
+scene4 = False#черный экран
 #Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
 #Заданий ФПС гри
@@ -112,16 +112,23 @@ def run_game():
     page_num = 1
     # black = pygame.image.load("images/comix/black.png")
     #Головний цикл гри у якому міститься майже все
+    smoke_width = 50
+    smoke_height = 50
+    smoke_y = 20
+    smoke_x = 0
+    smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
+    smoke.load_image()
+    smoke.blit_sprite(win)
     while game:
         #Медик починає рух
         last_medic_time_move += 1
         #Лічильнік починає лічити до того значення на якому медик зупиниться
         move_medic_count += 1
         #Робимо потрібні циклу локальні змінні глобальними
-        global smoke_x
-        global smoke_y
-        global smoke_height
-        global smoke_width
+        #global smoke_x
+        #global smoke_y
+        #global smoke_height
+        #global smoke_width
         global smoke_count
         global level2
         global level3
@@ -319,13 +326,15 @@ def run_game():
             
             #Умова змінення позиції об'єкту диму
             if smoke_count == 50:
-                #Змінення розмірів та позиції об'єкту диму
-                smoke_width += 50
-                smoke_height += 50
+                ##Змінення розмірів та позиції об'єкту диму
+                smoke_width = 50
+                smoke_height = 50
                 smoke_y -= 20
-                smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
-                smoke_count = 0
-            smoke.blit_sprite(win) #Відрисовка диму
+                #smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
+                #smoke_count = 0
+                #smoke_sur = pygame.image.load(smoke.NAME_IMAGE)
+                smoke = pygame.transform.scale(smoke.IMAGE, (smoke.WIDTH + 50, smoke.HEIGHT + 50))
+            #smoke.blit_sprite(win) #Відрисовка диму
             sprite.sprite.position() 
             x = sprite.sprite.X
             y = sprite.sprite.Y
@@ -603,6 +612,7 @@ def run_game():
         #Оновлення екрану гри
         pygame.display.flip()
         #Задання ФПС гри
+        #print(clock)
         clock.tick(fps)
 #Визов головної функції гри у якій є майже все  
 run_game()
