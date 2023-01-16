@@ -75,7 +75,17 @@ list_create_world, list_rect = area.create_world(area.list_world_1)
 # area.create_world(area.list_world_2)
 # @profile
 #Головна функція гри у якій міститься майже все
+smoke_width = 50
+smoke_height = 50
+smoke_y = 800
+smoke_x = 0
+smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
+print(smoke.X)
+smoke.IMAGE = pygame.transform.rotate(smoke.IMAGE, 180)
+smoke.load_image()
+
 def run_game():
+    global smoke_width, smoke_height, smoke_y, smoke_x, smoke
     #Робимо потрібні функції локальні змінні глобальними
     global list_create_world
     global list_rect
@@ -112,13 +122,7 @@ def run_game():
     page_num = 1
     # black = pygame.image.load("images/comix/black.png")
     #Головний цикл гри у якому міститься майже все
-    smoke_width = 50
-    smoke_height = 50
-    smoke_y = 20
-    smoke_x = 0
-    smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
-    smoke.load_image()
-    smoke.blit_sprite(win)
+    
     while game:
         #Медик починає рух
         last_medic_time_move += 1
@@ -304,7 +308,7 @@ def run_game():
             sprite.sprite.jump(list_rect)
             sprite.sprite.blit_sprite(win)
             sprite.sprite.gravity(list_rect= list_rect, sprite=1)
-            sprite.smoke.blit_sprite(win)
+            # sprite.smoke.blit_sprite(win)
             #Умова відрисовки противогазу
             if sprite.mask.IMAGE != None:
                 sprite.mask.blit_sprite(win)
@@ -327,13 +331,19 @@ def run_game():
             #Умова змінення позиції об'єкту диму
             if smoke_count == 50:
                 ##Змінення розмірів та позиції об'єкту диму
-                smoke_width = 50
-                smoke_height = 50
-                smoke_y -= 20
+                smoke_width += 100
+                smoke_height += 100
+                smoke_y -= 50
+                # smoke_x += 5
+                print(smoke_width)
                 #smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
                 #smoke_count = 0
                 #smoke_sur = pygame.image.load(smoke.NAME_IMAGE)
-                smoke = pygame.transform.scale(smoke.IMAGE, (smoke.WIDTH + 50, smoke.HEIGHT + 50))
+                smoke.IMAGE = pygame.transform.scale(smoke.IMAGE, (smoke_width, smoke_height))
+                smoke.Y = smoke_y
+                # smoke.X = smoke_x
+                smoke_count = 0
+            smoke.blit_sprite(win)
             #smoke.blit_sprite(win) #Відрисовка диму
             sprite.sprite.position() 
             x = sprite.sprite.X
@@ -343,8 +353,10 @@ def run_game():
             if sprite.sprite.X + sprite.sprite.WIDTH <= smoke.X + smoke.WIDTH + 20 and sprite.sprite.X + 20 >= smoke.X:
                 if sprite.sprite.Y + 21 >= smoke.Y and sprite.sprite.Y + sprite.sprite.HEIGHT <= smoke.Y + smoke.HEIGHT + 20:
                     if sprite.sprite.MASK_ON == True:
-                        pass
+                        print(22222222222)
+                        # pass
                     else:
+                        print(111111)
                         #Змінення параметрів диму на стандартні після програшу ігрока
                         smoke = sprite.Sprite(x = 0, y = 750, width = 50, height = 50, name_image = "game2/images/smoke.png")
                         smoke_width = 50
