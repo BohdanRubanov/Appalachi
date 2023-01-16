@@ -48,11 +48,12 @@ smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = sm
 #Змінні які відповідають за те, яка сцена або рівень на екрані
 scene1 = False #Меню
 backstory = False #Початкова предисторія
-level1 = True #1 рівень
+level1 = False#1 рівень
 level2 = False #2 рівень
 level3 = False #3 рівень
 scene3 = False #Розробники
 scene4 = False#черный экран
+level4 = True
 #Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
 #Заданий ФПС гри
@@ -122,7 +123,10 @@ def run_game():
     page_num = 1
     # black = pygame.image.load("images/comix/black.png")
     #Головний цикл гри у якому міститься майже все
-    
+    global smoke_count
+    global level2
+    global level3, level4
+    global scene4
     while game:
         #Медик починає рух
         last_medic_time_move += 1
@@ -133,10 +137,6 @@ def run_game():
         #global smoke_y
         #global smoke_height
         #global smoke_width
-        global smoke_count
-        global level2
-        global level3
-        global scene4
         if sprite.sprite_3.SCENE4:
             scene4 = True
         
@@ -350,13 +350,15 @@ def run_game():
             y = sprite.sprite.Y
             sprite_cor = x,y
             #Умова програшу від диму
-            if sprite.sprite.X + sprite.sprite.WIDTH <= smoke.X + smoke.WIDTH + 20 and sprite.sprite.X + 20 >= smoke.X:
-                if sprite.sprite.Y + 21 >= smoke.Y and sprite.sprite.Y + sprite.sprite.HEIGHT <= smoke.Y + smoke.HEIGHT + 20:
+            if sprite.sprite.X + sprite.sprite.WIDTH <= smoke_x + smoke_width + 20 and sprite.sprite.X + 20 >= smoke_x:
+                # print(3333333333)
+                if sprite.sprite.Y + 21 >= smoke_y and sprite.sprite.Y + sprite.sprite.HEIGHT <= smoke_y + smoke_height + 20:
+                    # print(22222222222)
                     if sprite.sprite.MASK_ON == True:
-                        print(22222222222)
-                        # pass
+                        # print(22222222222)
+                        pass
                     else:
-                        print(111111)
+                        # print(111111)
                         #Змінення параметрів диму на стандартні після програшу ігрока
                         smoke = sprite.Sprite(x = 0, y = 750, width = 50, height = 50, name_image = "game2/images/smoke.png")
                         smoke_width = 50
@@ -565,7 +567,7 @@ def run_game():
             sprite.sprite_3.extinguisher_collide() #Взяття вогнегасника
             sprite.sprite_3.door_collide(sprite.door_3)
         if scene4:
-        
+            
             for event in pygame.event.get():
                 
                 #Умова виходу з гри при натисненні хрестику
@@ -600,6 +602,14 @@ def run_game():
             # sprite.pipe_3.blit_sprite(win)
             # sprite.pipe_4.blit_sprite(win)
         #Умова за якою відкривається розділ розробників 
+        if level4:
+            
+            for event in pygame.event.get():
+                
+                #Умова виходу з гри при натисненні хрестику
+                if event.type == pygame.QUIT:
+                    game = False  
+            settings.bg.blit_sprite(win)
         if scene3:
             #Відрисовка об'єктів у розділі розробників
             settings.bg_developers.blit_sprite(win)
