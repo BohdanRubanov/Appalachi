@@ -52,8 +52,8 @@ level1 = False#1 рівень
 level2 = False #2 рівень
 level3 = False #3 рівень
 scene3 = False #Розробники
-scene4 = False#черный экран
-level4 = True
+scene4 = True#черный экран
+level4 = False
 #Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
 #Заданий ФПС гри
@@ -127,6 +127,7 @@ def run_game():
     global level2
     global level3, level4
     global scene4
+    
     while game:
         #Медик починає рух
         last_medic_time_move += 1
@@ -592,11 +593,20 @@ def run_game():
                 # print(el)
                 el.blit_sprite(win)  
             # print(len(list_pipes))
-            for i in range(21):
-                # print(list_pipes[i])
-                # pass
-                if list_pipes[i].DIRECTION == tubings.dict_right_directions[str(i + 1)]:
-                    print(111111)
+            pipes_flag = True
+            for key in tubings.dict_right_directions.keys():
+                if list_pipes[int(key)].DIRECTION == tubings.dict_right_directions[key]:
+                    pass
+                else:
+                    pipes_flag = False
+                    break
+            if pipes_flag:
+                print(111111111)
+            # for i in range(26):
+            #     # print(list_pipes[i])
+            #     # pass
+            #     if list_pipes[i].DIRECTION == tubings.dict_right_directions[str(i + 1)]:
+            #         print(111111)
             # sprite.pipe_1.blit_sprite(win)
             # sprite.pipe_2.blit_sprite(win)
             # sprite.pipe_3.blit_sprite(win)
