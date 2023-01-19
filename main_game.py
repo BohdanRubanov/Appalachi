@@ -50,9 +50,9 @@ scene1 = False #Меню
 backstory = False #Початкова предисторія
 level1 = False#1 рівень
 level2 = False #2 рівень
-level3 = False #3 рівень
+level3 = True #3 рівень
 scene3 = False #Розробники
-scene4 = True#черный экран
+scene4 = False#черный экран
 level4 = False
 #Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
@@ -72,7 +72,7 @@ list_rect_pipes = []
 list_create_world = []
 list_rect = []
 list_pipes, list_rect_pipes = tubings.create_world(tubings.list_pipe_matrix)
-list_create_world, list_rect = area.create_world(area.list_world_1)
+list_create_world, list_rect = area.create_world(area.list_world_3)
 # area.create_world(area.list_world_2)
 # @profile
 #Головна функція гри у якій міститься майже все
@@ -140,7 +140,7 @@ def run_game():
         #global smoke_width
         if sprite.sprite_3.SCENE4:
             scene4 = True
-        scene4 = True
+        # scene4 = True
         #Умова за якою відкривається меню гри
         if scene1:
             #Лічильник меню починає лічити за для того щоб почала роботу анімація
@@ -568,7 +568,7 @@ def run_game():
             sprite.sprite_3.extinguisher_collide() #Взяття вогнегасника
             sprite.sprite_3.door_collide(sprite.door_3)
         if scene4:
-            
+            # print(1111111)
             for event in pygame.event.get():
                 
                 #Умова виходу з гри при натисненні хрестику
