@@ -262,6 +262,7 @@ class Sprite(settings.Settings):
                if event[pygame.K_e]:
                #    print(22222)
                   self.OPEN_DOOR = True
+
     def mask_collide(self, win):
         event = pygame.key.get_pressed()
         if self.X + self.WIDTH <= mask.X + mask.WIDTH + 20 and self.X + 20 >= mask.X:
@@ -559,3 +560,6 @@ panel = Sprite(x = 535, y = 66, width = 50, height = 50, name_image = "game2/ima
 # pipe_2 = Sprite(x = 50, y = 400, width = 75, height = 75, name_image = "game2/images/pipes/pipe2.png")
 # pipe_3 = Sprite(x = 100, y = 100, width = 75, height = 75, name_image = "game2/images/pipes/pipe5.png")
 # pipe_4 = Sprite(x = 200, y = 200, width = 75, height = 75, name_image = "game2/images/pipes/pipe5.png")
+object1 = Sprite(x = 300, y = 66, width = 50, height = 50, name_image = "game2/images/panel.png")
+object2 = Sprite(x = 400, y = 66, width = 50, height = 50, name_image = "game2/images/panel.png")
+object3 = Sprite(x = 500, y = 66, width = 50, height = 50, name_image = "game2/images/panel.png")
