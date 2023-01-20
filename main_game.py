@@ -52,8 +52,8 @@ level1 = False#1 рівень
 level2 = False #2 рівень
 level3 = False #3 рівень
 scene3 = False #Розробники
-scene4 = False#черный экран
-level4 = True
+scene4 = True #Чорний экран
+level4 = False #Мініігра надування лодки
 #Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
 #Заданий ФПС гри
