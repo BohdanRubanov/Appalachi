@@ -53,7 +53,7 @@ level2 = False #2 рівень
 level3 = True #3 рівень
 scene3 = False #Розробники
 scene4 = False#черный экран
-level4 = False
+level4 = True
 #Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
 #Заданий ФПС гри
@@ -619,7 +619,15 @@ def run_game():
                 #Умова виходу з гри при натисненні хрестику
                 if event.type == pygame.QUIT:
                     game = False  
+                if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                    click = event.pos 
+                    if sprite.object1.RECT.collidepoint(click):
+                        sprite.object2 = sprite.Sprite(x = 400, y = 66, width = 100, height = 50, name_image = "game2/images/panel.png") 
+                        #print("1")
             settings.bg.blit_sprite(win)
+            sprite.object1.blit_sprite(win)    
+            sprite.object2.blit_sprite(win)  
+            sprite.object3.blit_sprite(win) 
         if scene3:
             #Відрисовка об'єктів у розділі розробників
             settings.bg_developers.blit_sprite(win)
