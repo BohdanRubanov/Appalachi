@@ -50,7 +50,7 @@ scene1 = False #Меню
 backstory = False #Початкова предисторія
 level1 = False#1 рівень
 level2 = False #2 рівень
-level3 = True #3 рівень
+level3 = False #3 рівень
 scene3 = False #Розробники
 scene4 = True #Чорний экран
 level4 = False #Мініігра надування лодки
@@ -72,7 +72,7 @@ list_rect_pipes = []
 list_create_world = []
 list_rect = []
 list_pipes, list_rect_pipes = tubings.create_world(tubings.list_pipe_matrix)
-list_create_world, list_rect = area.create_world(area.list_world_3)
+list_create_world, list_rect = area.create_world(area.list_world_1)
 # area.create_world(area.list_world_2)
 # @profile
 #Головна функція гри у якій міститься майже все
@@ -81,7 +81,7 @@ smoke_height = 50
 smoke_y = 800
 smoke_x = 0
 smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
-print(smoke.X)
+# print(smoke.X)
 smoke.IMAGE = pygame.transform.rotate(smoke.IMAGE, 180)
 smoke.load_image()
 
@@ -300,9 +300,12 @@ def run_game():
                 #Умова виходу з гри при натисненні хрестику
                 if event.type == pygame.QUIT:
                     game = False  
+            
             # print(clock.get_fps())
             smoke_count += 1 #Лічильник диму починає працю
             settings.bg.blit_sprite(win)
+            for el in list_create_world:
+                el.blit_sprite(win)
             sprite.sprite.can_move_right(list_rect)
             sprite.sprite.can_move_left(list_rect)
             # sprite.sprite.can_move_down(area.list_rect)
@@ -312,13 +315,15 @@ def run_game():
             sprite.sprite.gravity(list_rect= list_rect, sprite=1)
             # sprite.smoke.blit_sprite(win)
             #Умова відрисовки противогазу
-            if sprite.mask.IMAGE != None:
-                sprite.mask.blit_sprite(win)
             sprite.mask.gravity(list_rect= list_rect)
             settings.lever.blit_sprite(win)
-            settings.injured.blit_sprite(win)
+            if settings.injured.IMAGE != None:
+                settings.injured.blit_sprite(win)
             sprite.sprite.lever_collide(win)
             sprite.sprite.mask_collide(win)
+            if sprite.mask.IMAGE != None:
+                sprite.mask.blit_sprite(win)
+            # print(sprite.sprite.NAME_IMAGE)
             sprite.sprite.injured_collide()
             #Умова відрисовки одної з дверей
             if sprite.door.IMAGE != None:
@@ -327,17 +332,16 @@ def run_game():
             sprite.door_exit.blit_sprite(win)
             sprite.sprite.door_exit_collide()
             #Умова відрисовки блоків на мапі першого рівня
-            for el in list_create_world:
-                el.blit_sprite(win)
+            
             
             #Умова змінення позиції об'єкту диму
-            if smoke_count == 50:
+            if smoke_count == 100:
                 ##Змінення розмірів та позиції об'єкту диму
                 smoke_width += 100
                 smoke_height += 100
                 smoke_y -= 50
                 # smoke_x += 5
-                print(smoke_width)
+                # print(smoke_width)
                 #smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
                 #smoke_count = 0
                 #smoke_sur = pygame.image.load(smoke.NAME_IMAGE)
@@ -586,8 +590,10 @@ def run_game():
                        if pipe.RECT.collidepoint(event.pos):
                            pipe.IMAGE = pygame.transform.rotate(pipe.IMAGE, 90)
                            pipe.DIRECTION += 1
-                           print(pipe.DIRECTION)
+                        #    print(pipe.DIRECTION)
                            if pipe.DIRECTION > 4:
+                               pipe.DIRECTION = 1
+                           if pipe.NAME_IMAGE == "game2/images/pipes/pipe2.png" and pipe.DIRECTION > 2:
                                pipe.DIRECTION = 1
             settings.bg_pipes.blit_sprite(win)  
             for el in list_pipes:
@@ -596,9 +602,14 @@ def run_game():
             # print(len(list_pipes))
             pipes_flag = True
             for key in tubings.dict_right_directions.keys():
+                # print(key, list_pipes[int(key)].DIRECTION, tubings.dict_right_directions[key])
                 if list_pipes[int(key)].DIRECTION == tubings.dict_right_directions[key]:
+                    # print(list_pipes[int(key)].DIRECTION)
+                    # print(tubings.dict_right_directions[key])
                     pass
+                    # print(222222)
                 else:
+                    # print(222222)
                     pipes_flag = False
                     break
             if pipes_flag:
@@ -614,38 +625,40 @@ def run_game():
             # sprite.pipe_4.blit_sprite(win)
         #Умова за якою відкривається розділ розробників 
         if level4:
-            # sprite.hole1.HOLE_COUNT += 1
-            # sprite.hole2.HOLE_COUNT += 1
-            # sprite.hole3.HOLE_COUNT += 1
-            # sprite.hole4.HOLE_COUNT += 1
-            for event in pygame.event.get():
-                
-                #Умова виходу з гри при натисненні хрестику
-                if event.type == pygame.QUIT:
-                    game = False  
-                if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-                    click = event.pos 
-                    print(click)
-                    if sprite.pump.RECT.collidepoint(click):
-                        
-                        sprite.pump_scale.HEIGHT += 5
-                        sprite.pump_scale.Y -= 5
-                        # sprite.object2.IMAGE = pygame.transform.rotate(sprite.object2.IMAGE, 180)
-                        sprite.pump_scale.load_image()
-                        # sprite.object2.IMAGE = pygame.transform.rotate(sprite.object2.IMAGE, 180)
-                        #print("1")
-            settings.bg.blit_sprite(win)
-            sprite.pump.blit_sprite(win)    
-            sprite.pump_scale.blit_sprite(win)  
-            sprite.boat.blit_sprite(win) 
-            sprite.hole1.blit_sprite(win)
-            sprite.hole2.blit_sprite(win)
-            sprite.hole3.blit_sprite(win)
-            sprite.hole4.blit_sprite(win)
-            sprite.hole1.hole()
-            sprite.hole2.hole()
-            sprite.hole3.hole()
-            sprite.hole4.hole()
+            try:
+                # sprite.hole1.HOLE_COUNT += 1
+                # sprite.hole2.HOLE_COUNT += 1
+                # sprite.hole3.HOLE_COUNT += 1
+                # sprite.hole4.HOLE_COUNT += 1
+                for event in pygame.event.get():
+
+                    #Умова виходу з гри при натисненні хрестику
+                    if event.type == pygame.QUIT:
+                        game = False  
+                    if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                        click = event.pos 
+                        print(click)
+                        if sprite.pump.RECT.collidepoint(click):
+
+                            sprite.pump_scale.HEIGHT += 5
+                            sprite.pump_scale.Y -= 5
+                            # sprite.object2.IMAGE = pygame.transform.rotate(sprite.object2.IMAGE, 180)
+                            sprite.pump_scale.load_image()
+                            # sprite.object2.IMAGE = pygame.transform.rotate(sprite.object2.IMAGE, 180)
+                            #print("1")
+                settings.bg.blit_sprite(win)
+                sprite.pump.blit_sprite(win)    
+                sprite.pump_scale.blit_sprite(win)  
+                sprite.boat.blit_sprite(win) 
+                if not sprite.hole1.HOLE_COUNT:
+                    sprite.hole1.blit_sprite(win)
+                    sprite.pump_scale.HEIGHT -= 1
+                    sprite.pump_scale.Y += 1
+                    sprite.pump_scale.load_image()
+                sprite.hole1.hole()
+            except:
+                scene1 = True
+                level4 = False
         if scene3:
             #Відрисовка об'єктів у розділі розробників
             settings.bg_developers.blit_sprite(win)

@@ -50,5 +50,5 @@ exit = Settings(color =(255,0,0), x = 0,y = 0, width = 800, height = 800,name_im
 exit.RECT = pygame.Rect(470, 550, 300, 80)
 bg_developers = Settings(x = 0,y = 0, width = 800, height = 800,name_image = "game2/images/bg_developers.png")
 back = Settings(x = 700,y = 0, width = 100, height = 100,name_image = "game2/images/back.png")
-lever = Settings(x = 10,y = 620, width = 100, height = 100,name_image = "game2/images/lever.png")
-injured = Settings(x = 730,y = 670, width = 50, height = 50,name_image = "game2/images/injured.png")
+lever = Settings(x = 20,y = 620, width = 60, height = 60,name_image = "game2/images/lever.png")
+injured = Settings(x = 750,y = 675, width = 50, height = 50,name_image = "game2/images/injured.png")

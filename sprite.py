@@ -71,8 +71,9 @@ class Sprite(settings.Settings):
         self.BLIT_FIRE_6 = True
         self.BLIT_FIRE_7 = True
         self.HOLE_COUNT = True
-        self.TIME_HOLE_BLIT
+        self.TIME_HOLE_BLIT = 0
     def move_sprite(self):
+        if not self.MASK_ON and not self.INJURED:
             event = pygame.key.get_pressed()
             if event[pygame.K_RIGHT] and self.X + self.WIDTH <= dicts.SETTINGS_WIN["WIDTH"]:
                 self.DIRECTION = 'R'
@@ -101,53 +102,198 @@ class Sprite(settings.Settings):
             elif self.ACTIVE_GRAVITY == False:
                 self.NAME_IMAGE = "game2/images/player/1.png"
                 self.direction()
-            
+        if self.MASK_ON and not self.INJURED:
+            event = pygame.key.get_pressed()
+            if event[pygame.K_RIGHT] and self.X + self.WIDTH <= dicts.SETTINGS_WIN["WIDTH"]:
+                self.DIRECTION = 'R'
+                if self.CAN_MOVE_RIGHT == True:
+                    self.X += self.STEP
+                    # walk_sound.WALK_SOUND.play()
+                    # self.RECT.x = self.RECT.x + self.STEP
+                    # self.RECT.x = self.RECT.x + self.STEP
+                # print(self.ACTIVE_GRAVITY, self.JUMP)
+                if self.ACTIVE_GRAVITY == False and self.JUMP == False:
+                    # print(1111111)
+                    # print("anim_right")
+                    self.animation(folder= "player_mask",count_while=5,last_img= 5, first_img=1) 
+            elif event[pygame.K_LEFT] and self.X + 1 >= 0:   
+               
+                self.DIRECTION = 'L'
+                if self.CAN_MOVE_LEFT == True:      
+                    self.X -= self.STEP      
+                    # self.can_move_left(list_rect)
+                    # self.RECT.x = self.RECT.x - self.STEP
+                if self.ACTIVE_GRAVITY == False and self.JUMP == False:
+                    # print("anim_left")
+                    self.animation(folder= "player_mask",count_while=5,last_img= 5, first_img=1)
+                    # walk_sound.WALK_SOUND.play()
+                    # self.RECT.x = self.RECT.x - self.STEP 
+            elif self.ACTIVE_GRAVITY == False:
+                self.NAME_IMAGE = "game2/images/player_mask/1.png"
+                self.direction()
+        if self.INJURED:
+            event = pygame.key.get_pressed()
+            if event[pygame.K_RIGHT] and self.X + self.WIDTH <= dicts.SETTINGS_WIN["WIDTH"]:
+                self.DIRECTION = 'R'
+                if self.CAN_MOVE_RIGHT == True:
+                    self.X += self.STEP
+                    # walk_sound.WALK_SOUND.play()
+                    # self.RECT.x = self.RECT.x + self.STEP
+                    # self.RECT.x = self.RECT.x + self.STEP
+                # print(self.ACTIVE_GRAVITY, self.JUMP)
+                if self.ACTIVE_GRAVITY == False and self.JUMP == False:
+                    # print(1111111)
+                    # print("anim_right")
+                    self.animation(folder= "player_with_injured",count_while=5,last_img= 5, first_img=1) 
+            elif event[pygame.K_LEFT] and self.X + 1 >= 0:   
+               
+                self.DIRECTION = 'L'
+                if self.CAN_MOVE_LEFT == True:      
+                    self.X -= self.STEP      
+                    # self.can_move_left(list_rect)
+                    # self.RECT.x = self.RECT.x - self.STEP
+                if self.ACTIVE_GRAVITY == False and self.JUMP == False:
+                    # print("anim_left")
+                    self.animation(folder= "player_with_injured",count_while=5,last_img= 5, first_img=1)
+                    # walk_sound.WALK_SOUND.play()
+                    # self.RECT.x = self.RECT.x - self.STEP 
+            elif self.ACTIVE_GRAVITY == False:
+                self.NAME_IMAGE = "game2/images/player_with_injured/1.png"
+                self.direction()
      #
     def jump(self, list_rect):
-        # print(self.JUMP)
-        event = pygame.key.get_pressed()
-        #
-        if event[pygame.K_UP] and self.KEY_PRESSED == False:
-            self.KEY_PRESSED = True
-            # print(1111111111)
-        # if self.KEY_PRESSED == False:
-        #     print(self.COUNT_JUMP)
-        # if self.COUNT_JUMP > 30:
-        #     print(1111111111)
-        # print(self.COUNT_JUMP)
-    
-        if self.KEY_PRESSED and self.COUNT_JUMP <= 30:
-            if self.COUNT_JUMP <= 25:
-                self.NAME_IMAGE = "game2/images/player/6.png"
-            else: 
+        if not self.MASK_ON and not self.INJURED:
+            # print(self.JUMP)
+            event = pygame.key.get_pressed()
+            #
+            if event[pygame.K_UP] and self.KEY_PRESSED == False:
+                self.KEY_PRESSED = True
+                # print(1111111111)
+            # if self.KEY_PRESSED == False:
+            #     print(self.COUNT_JUMP)
+            # if self.COUNT_JUMP > 30:
+            #     print(1111111111)
+            # print(self.COUNT_JUMP)
+
+            if self.KEY_PRESSED and self.COUNT_JUMP <= 30:
+                if self.COUNT_JUMP <= 25:
+                    self.NAME_IMAGE = "game2/images/player/6.png"
+                else: 
+                    self.NAME_IMAGE = "game2/images/player/8.png"
+                # self.animation(folder= "player",count_while=1,last_img= 6, first_img=4)
+                self.direction()
+                # print(self.COUNT_JUMP)
+                # print(self.KEY_PRESSED)
+                self.JUMP = True
+                self.COUNT_JUMP += 1
+                # self.RECT.y -= 11
+                self.Y -= 11
+                self.can_move_up(list_rect)
+                # print(self.COUNT_JUMP)
+            if self.COUNT_JUMP > 30 and self.COUNT_JUMP <= 35:
+                # print(1111111111)
+                # print(1111111111111111111111111111111)
+                self.COUNT_JUMP += 1
+                # print(self.COUNT_JUMP)
+                self.JUMP = False 
+                # if self.FLAG_GRAVITY_ANIMATION == True:
                 self.NAME_IMAGE = "game2/images/player/8.png"
-            # self.animation(folder= "player",count_while=1,last_img= 6, first_img=4)
-            self.direction()
+                self.direction()
+            # if self.COUNT_JUMP > 35:
+            #     # self.JUMP = False 
+            #     self.NAME_IMAGE = "game2/images/player/6.png"
+            #     self.direction()
+
+                # self.KEY_PRESSED = False
+                # self.COUNT_JUMP = 0
+        if self.MASK_ON and not self.INJURED:
+            # print(self.JUMP)
+            event = pygame.key.get_pressed()
+            #
+            if event[pygame.K_UP] and self.KEY_PRESSED == False:
+                self.KEY_PRESSED = True
+                # print(1111111111)
+            # if self.KEY_PRESSED == False:
+            #     print(self.COUNT_JUMP)
+            # if self.COUNT_JUMP > 30:
+            #     print(1111111111)
             # print(self.COUNT_JUMP)
-            # print(self.KEY_PRESSED)
-            self.JUMP = True
-            self.COUNT_JUMP += 1
-            # self.RECT.y -= 11
-            self.Y -= 11
-            self.can_move_up(list_rect)
+
+            if self.KEY_PRESSED and self.COUNT_JUMP <= 30:
+                if self.COUNT_JUMP <= 25:
+                    self.NAME_IMAGE = "game2/images/player_mask/6.png"
+                else: 
+                    self.NAME_IMAGE = "game2/images/player_mask/8.png"
+                # self.animation(folder= "player",count_while=1,last_img= 6, first_img=4)
+                self.direction()
+                # print(self.COUNT_JUMP)
+                # print(self.KEY_PRESSED)
+                self.JUMP = True
+                self.COUNT_JUMP += 1
+                # self.RECT.y -= 11
+                self.Y -= 11
+                self.can_move_up(list_rect)
+                # print(self.COUNT_JUMP)
+            if self.COUNT_JUMP > 30 and self.COUNT_JUMP <= 35:
+                # print(1111111111)
+                # print(1111111111111111111111111111111)
+                self.COUNT_JUMP += 1
+                # print(self.COUNT_JUMP)
+                self.JUMP = False 
+                # if self.FLAG_GRAVITY_ANIMATION == True:
+                self.NAME_IMAGE = "game2/images/player_mask/8.png"
+                self.direction()
+            # if self.COUNT_JUMP > 35:
+            #     # self.JUMP = False 
+            #     self.NAME_IMAGE = "game2/images/player/6.png"
+            #     self.direction()
+
+                # self.KEY_PRESSED = False
+                # self.COUNT_JUMP = 0
+        if self.INJURED:
+            # print(self.JUMP)
+            event = pygame.key.get_pressed()
+            #
+            if event[pygame.K_UP] and self.KEY_PRESSED == False:
+                self.KEY_PRESSED = True
+                # print(1111111111)
+            # if self.KEY_PRESSED == False:
+            #     print(self.COUNT_JUMP)
+            # if self.COUNT_JUMP > 30:
+            #     print(1111111111)
             # print(self.COUNT_JUMP)
-        if self.COUNT_JUMP > 30 and self.COUNT_JUMP <= 35:
-            # print(1111111111)
-            # print(1111111111111111111111111111111)
-            self.COUNT_JUMP += 1
-            # print(self.COUNT_JUMP)
-            self.JUMP = False 
-            # if self.FLAG_GRAVITY_ANIMATION == True:
-            self.NAME_IMAGE = "game2/images/player/8.png"
-            self.direction()
-        # if self.COUNT_JUMP > 35:
-        #     # self.JUMP = False 
-        #     self.NAME_IMAGE = "game2/images/player/6.png"
-        #     self.direction()
-            
-            # self.KEY_PRESSED = False
-            # self.COUNT_JUMP = 0
-            
+
+            if self.KEY_PRESSED and self.COUNT_JUMP <= 30:
+                if self.COUNT_JUMP <= 25:
+                    self.NAME_IMAGE = "game2/images/player_with_injured/6.png"
+                else: 
+                    self.NAME_IMAGE = "game2/images/player_with_injured/8.png"
+                # self.animation(folder= "player",count_while=1,last_img= 6, first_img=4)
+                self.direction()
+                # print(self.COUNT_JUMP)
+                # print(self.KEY_PRESSED)
+                self.JUMP = True
+                self.COUNT_JUMP += 1
+                # self.RECT.y -= 11
+                self.Y -= 11
+                self.can_move_up(list_rect)
+                # print(self.COUNT_JUMP)
+            if self.COUNT_JUMP > 30 and self.COUNT_JUMP <= 35:
+                # print(1111111111)
+                # print(1111111111111111111111111111111)
+                self.COUNT_JUMP += 1
+                # print(self.COUNT_JUMP)
+                self.JUMP = False 
+                # if self.FLAG_GRAVITY_ANIMATION == True:
+                self.NAME_IMAGE = "game2/images/player_with_injured/8.png"
+                self.direction()
+            # if self.COUNT_JUMP > 35:
+            #     # self.JUMP = False 
+            #     self.NAME_IMAGE = "game2/images/player/6.png"
+            #     self.direction()
+
+                # self.KEY_PRESSED = False
+                # self.COUNT_JUMP = 0   
     def medic_move(self):
         if self.MEDIC_MOVE_LEFT == True:
                 self.DIRECTION = 'L'
@@ -177,21 +323,51 @@ class Sprite(settings.Settings):
         
 
     def gravity(self, list_rect, sprite = None):
-        # global flag_gravity_animation
-       
-        self.can_move_down(list_rect, sprite)
-        if self.ACTIVE_GRAVITY:
-            self.Y += self.GRAVITY
-            if sprite != None and self.JUMP == False and (self.COUNT_JUMP > 35 or self.COUNT_JUMP == 0):
+        if not self.MASK_ON and not self.INJURED:
+            # global flag_gravity_animation
 
-                # print(11111111111)
-                self.NAME_IMAGE = "game2/images/player/6.png"
-                # self.load_image()
-                self.direction()
-                # flag_gravity_animation = True
-            # flag_gravity_animation = False
-            # self.animation(folder= "player",count_while=3,last_img= 3, first_img=1)
-            
+            self.can_move_down(list_rect, sprite)
+            if self.ACTIVE_GRAVITY:
+                self.Y += self.GRAVITY
+                if sprite != None and self.JUMP == False and (self.COUNT_JUMP > 35 or self.COUNT_JUMP == 0):
+
+                    # print(11111111111)
+                    self.NAME_IMAGE = "game2/images/player/6.png"
+                    # self.load_image()
+                    self.direction()
+                    # flag_gravity_animation = True
+                # flag_gravity_animation = False
+                # self.animation(folder= "player",count_while=3,last_img= 3, first_img=1)
+        if self.MASK_ON and not self.INJURED:
+            # global flag_gravity_animation
+
+            self.can_move_down(list_rect, sprite)
+            if self.ACTIVE_GRAVITY:
+                self.Y += self.GRAVITY
+                if sprite != None and self.JUMP == False and (self.COUNT_JUMP > 35 or self.COUNT_JUMP == 0):
+
+                    # print(11111111111)
+                    self.NAME_IMAGE = "game2/images/player_mask/6.png"
+                    # self.load_image()
+                    self.direction()
+                    # flag_gravity_animation = True
+                # flag_gravity_animation = False
+                # self.animation(folder= "player",count_while=3,last_img= 3, first_img=1)
+        if self.INJURED:
+            # global flag_gravity_animation
+
+            self.can_move_down(list_rect, sprite)
+            if self.ACTIVE_GRAVITY:
+                self.Y += self.GRAVITY
+                if sprite != None and self.JUMP == False and (self.COUNT_JUMP > 35 or self.COUNT_JUMP == 0):
+
+                    # print(11111111111)
+                    self.NAME_IMAGE = "game2/images/player_with_injured/6.png"
+                    # self.load_image()
+                    self.direction()
+                    # flag_gravity_animation = True
+                # flag_gravity_animation = False
+                # self.animation(folder= "player",count_while=3,last_img= 3, first_img=1)
         
     def can_move_right(self, list_rect):
         for block in list_rect:
@@ -265,9 +441,8 @@ class Sprite(settings.Settings):
 
     def lever_collide(self, win):
         event = pygame.key.get_pressed()
-        if self.X <= settings.lever.X + settings.lever.WIDTH and self.X + self.WIDTH >= settings.lever.X:
-           # print(222222222222222)
-           if self.Y + 30 >= settings.lever.Y and self.Y + self.HEIGHT <= settings.lever.Y + settings.lever.HEIGHT + 30:
+        if (self.X + self.WIDTH <= settings.lever.X + self.STEP + 60 and self.X + self.WIDTH >= settings.lever.X - 60) or (self.X >= settings.lever.X - self.STEP - 60 and self.X <= settings.lever.X + settings.lever.WIDTH + 60):
+            if (self.Y + 10 <= settings.lever.Y + settings.lever.HEIGHT and self.Y + self.HEIGHT - 10 >= settings.lever.Y) or (self.Y + 10 <= settings.lever.Y + settings.lever.HEIGHT and self.Y + self.HEIGHT - 10 >= settings.lever.Y):
                self.draw_text(win, "E")
                if event[pygame.K_e]:
                #    print(22222)
@@ -284,8 +459,9 @@ class Sprite(settings.Settings):
                 if event[pygame.K_r]:
                     # print(222222)'
                     self.MASK_ON = True
-                    self.NAME_IMAGE = "game2/images/sprite_with_injured.png"
+                    self.NAME_IMAGE = "game2/images/player_mask/1.png"
                     mask.NAME_IMAGE = None
+                    mask.IMAGE = None
                     self.load_image()
 
     def injured_collide(self):
@@ -294,8 +470,10 @@ class Sprite(settings.Settings):
             if self.Y + 21 >= settings.injured.Y and self.Y + self.HEIGHT <= settings.injured.Y + settings.injured.HEIGHT + 20:
                 self.draw_text(win, "F")
                 if event[pygame.K_f]:
-                    self.NAME_IMAGE = "game2/images/sprite_with_injured.png"
+                    self.NAME_IMAGE = "game2/images/player_with_injured/1.png"
                     self.load_image()
+                    settings.injured.IMAGE = None
+                    settings.injured.NAME_IMAGE = None
                     self.INJURED = True
     def position(self):
         event = pygame.key.get_pressed()
@@ -410,7 +588,7 @@ class Sprite(settings.Settings):
                 # pass
         if (self.Y + 10 <= fire.Y + fire.HEIGHT and self.Y + self.HEIGHT - 10 >= fire.Y) or (self.Y + 10 <= fire.Y + fire.HEIGHT and self.Y + self.HEIGHT - 10 >= fire.Y):
                 # print(block.HEIGHT, "23e43ed3sede")
-            if (self.X + self.WIDTH <= fire.X + self.STEP and self.X + self.WIDTH >= fire.X + 100) or (self.X >= fire.X - self.STEP - 30 and self.X <= fire.X + fire.WIDTH + 30):
+            if (self.X + self.WIDTH <= fire.X + self.STEP + 30 and self.X + self.WIDTH >= fire.X - 30) or (self.X >= fire.X - self.STEP - 30 and self.X <= fire.X + fire.WIDTH + 30):
                 if self.EXTING_ON:
                     event = pygame.key.get_pressed()
                     self.draw_text(win, "E")
@@ -540,11 +718,15 @@ class Sprite(settings.Settings):
         global letter
         # list_letters = ["q", "w", "e", "r", "t", "y", "u","x", "c", "f"]
         if self.HOLE_COUNT:
+            # print(11111)
+            self.TIME_HOLE_BLIT += 1
+            if self.TIME_HOLE_BLIT == 50:
             # print(111)
-            self.X = random.choice(list_cor_x) 
-            self.Y = random.choice(list_cor_y)  
-            letter = random.choice(list_letters)
-            self.HOLE_COUNT = False
+                self.X = random.choice(list_cor_x) 
+                self.Y = random.choice(list_cor_y)  
+                letter = random.choice(list_letters)
+                self.TIME_HOLE_BLIT = 0
+                self.HOLE_COUNT = False
         event = pygame.key.get_pressed()
         font = pygame.font.SysFont("kokila", 20)
         follow = font.render(f"{letter}", 1, (0,0,0))
@@ -579,7 +761,8 @@ class Sprite(settings.Settings):
         if letter == "f":
             if event[pygame.K_f]:
                 self.HOLE_COUNT = True
-        win.blit(follow, (self.X, self.Y))
+        if not self.HOLE_COUNT:
+            win.blit(follow, (self.X, self.Y))
 
                 
 
@@ -619,6 +802,3 @@ pump_scale = Sprite(x = 580, y = 250, width = 60, height = 100, name_image = "ga
 boat = Sprite(x = 100, y = 250, width = 300, height = 500, name_image = "game2/images/panel.png")
 
 hole1 = Sprite(x = 0, y = 0, width = 50, height = 50, name_image = "game2/images/panel.png")
-hole2 = Sprite(x = 0, y = 0, width = 50, height = 50, name_image = "game2/images/panel.png")
-hole3 = Sprite(x = 0, y = 0, width = 50, height = 50, name_image = "game2/images/panel.png")
-hole4 = Sprite(x = 0, y = 0, width = 50, height = 50, name_image = "game2/images/panel.png")
