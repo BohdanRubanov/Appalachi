@@ -5,10 +5,18 @@ import dicts
 import os 
 import bullet
 import music
+import random
 # from bullet import blit_bullet_count
+list_letters = ["q", "w", "e", "r", "t", "y", "u","x", "c", "f"]
+list_cor_x = [150, 200, 220, 300, 350, 370]
+list_cor_y = [300, 350, 440, 580, 620, 700]
 win = pygame.display.set_mode((dicts.SETTINGS_WIN["WIDTH"], dicts.SETTINGS_WIN["HEIGHT"]))
 flag_bullet_die = False
 flag_level_3 = False
+letter = ""
+# font = pygame.font.SysFont("kokila", 20)
+# follow = font.render("", 1, (0,0,0))
+
 # flag_pistol_shoot = False
 # flag_gravity_animation = False
 bullet1 = bullet.Bullet(
@@ -62,6 +70,8 @@ class Sprite(settings.Settings):
         self.BLIT_FIRE_5 = True
         self.BLIT_FIRE_6 = True
         self.BLIT_FIRE_7 = True
+        self.HOLE_COUNT = True
+        self.TIME_HOLE_BLIT
     def move_sprite(self):
             event = pygame.key.get_pressed()
             if event[pygame.K_RIGHT] and self.X + self.WIDTH <= dicts.SETTINGS_WIN["WIDTH"]:
@@ -526,7 +536,51 @@ class Sprite(settings.Settings):
                     if bullet1.MOVE_BULLET == False:
                         # print(22222222222)
                         self.LIST_BULLET.remove(bullet1)   
-                    
+    def hole(self):
+        global letter
+        # list_letters = ["q", "w", "e", "r", "t", "y", "u","x", "c", "f"]
+        if self.HOLE_COUNT:
+            # print(111)
+            self.X = random.choice(list_cor_x) 
+            self.Y = random.choice(list_cor_y)  
+            letter = random.choice(list_letters)
+            self.HOLE_COUNT = False
+        event = pygame.key.get_pressed()
+        font = pygame.font.SysFont("kokila", 20)
+        follow = font.render(f"{letter}", 1, (0,0,0))
+        # print(letter)
+        if letter == "q":
+            if event[pygame.K_q]:
+                self.HOLE_COUNT = True
+        if letter == "w":
+            if event[pygame.K_w]:
+                self.HOLE_COUNT = True
+        if letter == "e":
+            if event[pygame.K_e]:
+                self.HOLE_COUNT = True
+        if letter == "r":
+            if event[pygame.K_r]:
+                self.HOLE_COUNT = True
+        if letter == "t":
+            if event[pygame.K_t]:
+                self.HOLE_COUNT = True
+        if letter == "y":
+            if event[pygame.K_y]:
+                self.HOLE_COUNT = True
+        if letter == "u":
+            if event[pygame.K_u]:
+                self.HOLE_COUNT = True
+        if letter == "x":
+            if event[pygame.K_x]:
+                self.HOLE_COUNT = True
+        if letter == "c":
+            if event[pygame.K_c]:
+                self.HOLE_COUNT = True
+        if letter == "f":
+            if event[pygame.K_f]:
+                self.HOLE_COUNT = True
+        win.blit(follow, (self.X, self.Y))
+
                 
 
 
@@ -560,6 +614,11 @@ panel = Sprite(x = 535, y = 66, width = 50, height = 50, name_image = "game2/ima
 # pipe_2 = Sprite(x = 50, y = 400, width = 75, height = 75, name_image = "game2/images/pipes/pipe2.png")
 # pipe_3 = Sprite(x = 100, y = 100, width = 75, height = 75, name_image = "game2/images/pipes/pipe5.png")
 # pipe_4 = Sprite(x = 200, y = 200, width = 75, height = 75, name_image = "game2/images/pipes/pipe5.png")
-object1 = Sprite(x = 300, y = 66, width = 50, height = 50, name_image = "game2/images/panel.png")
-object2 = Sprite(x = 400, y = 66, width = 50, height = 50, name_image = "game2/images/panel.png")
-object3 = Sprite(x = 500, y = 66, width = 50, height = 50, name_image = "game2/images/panel.png")
+pump = Sprite(x = 550, y = 550, width = 200, height = 200, name_image = "game2/images/panel.png")
+pump_scale = Sprite(x = 580, y = 250, width = 60, height = 100, name_image = "game2/images/panel.png")
+boat = Sprite(x = 100, y = 250, width = 300, height = 500, name_image = "game2/images/panel.png")
+
+hole1 = Sprite(x = 0, y = 0, width = 50, height = 50, name_image = "game2/images/panel.png")
+hole2 = Sprite(x = 0, y = 0, width = 50, height = 50, name_image = "game2/images/panel.png")
+hole3 = Sprite(x = 0, y = 0, width = 50, height = 50, name_image = "game2/images/panel.png")
+hole4 = Sprite(x = 0, y = 0, width = 50, height = 50, name_image = "game2/images/panel.png")

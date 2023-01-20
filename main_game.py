@@ -85,6 +85,7 @@ print(smoke.X)
 smoke.IMAGE = pygame.transform.rotate(smoke.IMAGE, 180)
 smoke.load_image()
 
+# sprite.object2.load_image()
 def run_game():
     global smoke_width, smoke_height, smoke_y, smoke_x, smoke
     #Робимо потрібні функції локальні змінні глобальними
@@ -613,7 +614,10 @@ def run_game():
             # sprite.pipe_4.blit_sprite(win)
         #Умова за якою відкривається розділ розробників 
         if level4:
-            
+            # sprite.hole1.HOLE_COUNT += 1
+            # sprite.hole2.HOLE_COUNT += 1
+            # sprite.hole3.HOLE_COUNT += 1
+            # sprite.hole4.HOLE_COUNT += 1
             for event in pygame.event.get():
                 
                 #Умова виходу з гри при натисненні хрестику
@@ -621,13 +625,27 @@ def run_game():
                     game = False  
                 if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                     click = event.pos 
-                    if sprite.object1.RECT.collidepoint(click):
-                        sprite.object2 = sprite.Sprite(x = 400, y = 66, width = 100, height = 50, name_image = "game2/images/panel.png") 
+                    print(click)
+                    if sprite.pump.RECT.collidepoint(click):
+                        
+                        sprite.pump_scale.HEIGHT += 5
+                        sprite.pump_scale.Y -= 5
+                        # sprite.object2.IMAGE = pygame.transform.rotate(sprite.object2.IMAGE, 180)
+                        sprite.pump_scale.load_image()
+                        # sprite.object2.IMAGE = pygame.transform.rotate(sprite.object2.IMAGE, 180)
                         #print("1")
             settings.bg.blit_sprite(win)
-            sprite.object1.blit_sprite(win)    
-            sprite.object2.blit_sprite(win)  
-            sprite.object3.blit_sprite(win) 
+            sprite.pump.blit_sprite(win)    
+            sprite.pump_scale.blit_sprite(win)  
+            sprite.boat.blit_sprite(win) 
+            sprite.hole1.blit_sprite(win)
+            sprite.hole2.blit_sprite(win)
+            sprite.hole3.blit_sprite(win)
+            sprite.hole4.blit_sprite(win)
+            sprite.hole1.hole()
+            sprite.hole2.hole()
+            sprite.hole3.hole()
+            sprite.hole4.hole()
         if scene3:
             #Відрисовка об'єктів у розділі розробників
             settings.bg_developers.blit_sprite(win)
