@@ -49,10 +49,10 @@ smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = sm
 scene1 = False #Меню
 backstory = False #Початкова предисторія
 level1 = False#1 рівень
-level2 = False #2 рівень
+level2 = True #2 рівень
 level3 = False #3 рівень
 scene3 = False #Розробники
-scene4 = True #Чорний экран
+scene4 = False #Чорний экран
 level4 = False #Мініігра надування лодки
 #Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
@@ -72,7 +72,7 @@ list_rect_pipes = []
 list_create_world = []
 list_rect = []
 list_pipes, list_rect_pipes = tubings.create_world(tubings.list_pipe_matrix)
-list_create_world, list_rect = area.create_world(area.list_world_1)
+list_create_world, list_rect = area.create_world(area.list_world_2)
 # area.create_world(area.list_world_2)
 # @profile
 #Головна функція гри у якій міститься майже все
@@ -130,6 +130,7 @@ def run_game():
     global scene4
     
     while game:
+        
         #Медик починає рух
         last_medic_time_move += 1
         #Лічильнік починає лічити до того значення на якому медик зупиниться
@@ -337,9 +338,9 @@ def run_game():
             #Умова змінення позиції об'єкту диму
             if smoke_count == 100:
                 ##Змінення розмірів та позиції об'єкту диму
-                smoke_width += 100
-                smoke_height += 100
-                smoke_y -= 50
+                smoke_width += 125
+                smoke_height += 125
+                smoke_y -= 125
                 # smoke_x += 5
                 # print(smoke_width)
                 #smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
@@ -364,6 +365,8 @@ def run_game():
                         # print(22222222222)
                         pass
                     else:
+                        sprite.sprite.X = 330
+                        sprite.sprite.Y = 600
                         # print(111111)
                         #Змінення параметрів диму на стандартні після програшу ігрока
                         smoke = sprite.Sprite(x = 0, y = 750, width = 50, height = 50, name_image = "game2/images/smoke.png")
@@ -386,6 +389,16 @@ def run_game():
             event = pygame.key.get_pressed()
             #Умова проходження та закінчення 1 рівня та переходу до 2
             if sprite.sprite.EXIT_DOOR:
+                sprite.sprite.X = 330
+                sprite.sprite.Y = 600
+                sprite.sprite.MASK_ON = False
+                sprite.sprite.INJURED = False
+                sprite.mask.NAME_IMAGE = "game2/images/mask.png"
+                sprite.mask.load_image()
+                sprite.door.NAME_IMAGE = "game2/images/door.png"
+                sprite.door.load_image()
+                settings.injured.NAME_IMAGE = "game2/images/injured.png"
+                settings.injured.load_image()
                 level2 = True #Робимо level2 дійсним тим самим починаємо 2 рівень
                 list_create_world, list_rect = area.create_world(area.list_world_2)
                 #Змінення музики
@@ -395,9 +408,11 @@ def run_game():
                 # music.level2_background_sound.load()
                 # music.level2_background_sound.play(repeat=-1)
                 level1 = False #Робимо level1 не дійсним тим самим закінчуємо 1 рівень
+                sprite.sprite.EXIT_DOOR = False
 
         #Умова за якою відкривається 2 рівень гри
         if level2: 
+            print(111111111111)
             #Умова початку відигрування музики 2 рівня
             if not pygame.mixer.music.get_busy():
                 music.level2_background_sound.load()
@@ -437,8 +452,8 @@ def run_game():
             sprite.medic_bot.gravity(list_rect= list_rect)
             #Умова програгу від пулі
             if bullet.flag_bullet_die == True:
-                level2 = False #Роблення сцени другого рівня не дійсною тим самим відбувається закінчення 2 рівня
                 scene1 = True #Роблення сцени меню гри дійсною тим самим відкривається меню
+                level2 = False #Роблення сцени другого рівня не дійсною тим самим відбувається закінчення 2 рівня
                 #Змінення музики
                 music.level2_background_sound.stop()
                 music.level2_background_sound.unload()
@@ -595,6 +610,7 @@ def run_game():
                                pipe.DIRECTION = 1
                            if pipe.NAME_IMAGE == "game2/images/pipes/pipe2.png" and pipe.DIRECTION > 2:
                                pipe.DIRECTION = 1
+                           print(pipe.DIRECTION)
             settings.bg_pipes.blit_sprite(win)  
             for el in list_pipes:
                 # print(el)
@@ -613,7 +629,7 @@ def run_game():
                     pipes_flag = False
                     break
             if pipes_flag:
-                print(111111111)
+                print(11111111)
             # for i in range(26):
             #     # print(list_pipes[i])
             #     # pass
@@ -685,5 +701,6 @@ def run_game():
         #Задання ФПС гри
         #print(clock)
         clock.tick(fps)
+        # print(scene1, level1, level2)
 #Визов головної функції гри у якій є майже все  
 run_game()

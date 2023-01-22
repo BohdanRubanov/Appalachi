@@ -3,9 +3,8 @@ import settings
 win_height = 800
 win_width = 800
 
-pipe_w = 100
+pipe_w = 60
 pipe_h = 60
-
 list_pipe_matrix = [
     "00000000000",
     "20000000000",
