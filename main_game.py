@@ -102,7 +102,7 @@ level2 = False #2 рівень
 level3 = False #3 рівень
 scene3 = False #Розробники
 scene4 = False #Чорний экран
-level4 =  True #Мініігра надування лодки
+level4 =  False #Мініігра надування лодки
 death_scene1 = False
 death_scene2 = False
 death_scene3 = False
@@ -950,6 +950,7 @@ def run_game():
                     fire_flag = False
             sprite.sprite_3.door_collide(sprite.door_3)
             if sprite.sprite_3.DEATH_FIRE:
+                music.level3.stop()
                 death_scene3 = True
                 level3 = False
         if scene4:
@@ -1059,6 +1060,7 @@ def run_game():
                 sprite.hole1.hole()
             except:
                 print(111111)
+                music.inflation_minigame.stop()
                 scene1 = True
                 level4 = False
         if scene3:
