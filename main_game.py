@@ -102,10 +102,10 @@ level2 = False #2 рівень
 level3 = False #3 рівень
 scene3 = False #Розробники
 scene4 = False #Чорний экран
-level4 =  False #Мініігра надування лодки
+level4 =  True #Мініігра надування лодки
 death_scene1 = False
 death_scene2 = False
-death_scene3 = True
+death_scene3 = False
 death_scene4 = False
 #Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
@@ -710,6 +710,7 @@ def run_game():
         
         #Умова за якою відкривається 3 рівень гри  
         if level3:
+            music.level3.play()
             #Цикл всіх івентів у 3 рівні гри
             for event in pygame.event.get():
                 #Умова виходу з гри при натисненні хрестику
@@ -952,6 +953,7 @@ def run_game():
                 death_scene3 = True
                 level3 = False
         if scene4:
+            music.pipes_minigame.play()
             # print(1111111)
             for event in pygame.event.get():
                 
@@ -1022,6 +1024,8 @@ def run_game():
             # sprite.pipe_4.blit_sprite(win)
         #Умова за якою відкривається розділ розробників 
         if level4:
+            # music.inflation_minigame.load()
+            music.inflation_minigame.play()
             try:
                 # sprite.hole1.HOLE_COUNT += 1
                 # sprite.hole2.HOLE_COUNT += 1

@@ -27,7 +27,9 @@ die_smoke_version = Sound('sounds/die_smoke_version.wav', 0.5)
 menu_background_sound = Music('sounds/menu_background_song.wav', 0.5)
 level1_background_sound = Music('sounds/level1_background_song.wav', 0.5)
 level2_background_sound = Music('sounds/level2_background_song.wav', 0.5)
-
+level3 = Sound('sounds/minigames_and_level3_sound.wav', 0.5)
+inflation_minigame = Sound('sounds/minigames_and_level3_sound.wav', 0.5)
+pipes_minigame = Sound('sounds/minigames_and_level3_sound.wav', 0.5)
 
 
 
