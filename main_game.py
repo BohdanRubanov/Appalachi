@@ -95,9 +95,12 @@ smoke_y = 750
 #Создання об'єкт диму
 smoke = sprite.Sprite(x = smoke_x, y = smoke_y, width = smoke_width, height = smoke_height, name_image = "game2/images/smoke.png")
 #Змінні які відповідають за те, яка сцена або рівень на екрані
-scene1 = False #Меню
+scene1 = True #Меню
 backstory = False #Початкова предисторія
 level1 = False#1 рівень
+comix_2 = False
+comix_3 = False
+comix_4 = False
 level2 = False #2 рівень
 level3 = False #3 рівень
 scene3 = False #Розробники
@@ -107,6 +110,7 @@ death_scene1 = False
 death_scene2 = False
 death_scene3 = False
 death_scene4 = False
+win_1 = False
 #Лічильник диму за допомогою якого змінюються розміри диму
 smoke_count = 0 
 #Заданий ФПС гри
@@ -117,15 +121,16 @@ music.menu_background_sound.play(repeat=-1)
 #Создавання об'єкту вікна гри
 win = pygame.display.set_mode((dicts.SETTINGS_WIN["WIDTH"], dicts.SETTINGS_WIN["HEIGHT"]))
 #Задання назви вікну гри
-pygame.display.set_caption("game")
-
+pygame.display.set_caption("Appalachi")
+pygame_icon = pygame.image.load('images/icon.png')
+pygame.display.set_icon(pygame_icon)
 list_pipes = []
 list_rect_pipes = []
 #Все те що відноситься до матриці
 list_create_world = []
 list_rect = []
 list_pipes, list_rect_pipes = tubings.create_world(tubings.list_pipe_matrix)
-list_create_world, list_rect = area.create_world(area.list_world_3)
+list_create_world, list_rect = area.create_world(area.list_world_2)
 # area.create_world(area.list_world_2)
 # @profile
 #Головна функція гри у якій міститься майже все
@@ -152,6 +157,9 @@ def run_game():
     global death_scene2
     global death_scene3
     global death_scene4
+    global backstory
+    global comix_2, comix_3, comix_4
+    global win_1
     #Лічильники
     menu_count = 0 #Лічильник для анімацій у меню
     fire_flag = True
@@ -193,8 +201,7 @@ def run_game():
         
         if sprite.sprite_3.SCENE5:
             level3 = False
-            level4 = True
-            sprite.sprite_3.SCENE5 = False
+            comix_4 = True
         #Медик починає рух
         last_medic_time_move += 1
         #Лічильнік починає лічити до того значення на якому медик зупиниться
@@ -251,12 +258,9 @@ def run_game():
                     print(click) #Виведення координат натиснення ігрока
                     #Умова відкриття 1 рівня при натисненні на кнопку play
                     if settings.play.RECT.collidepoint(click):
-                        level1 = True #Змінна яка робить level1 дійсним за допомогою чого запускається 1 рівень
-                        music.menu_background_sound.stop() #Зупинення музику у меню
-                        music.menu_background_sound.unload() #Видалення музику у меню з гри на тей час поки в неї нема потреби
-                        #music.level1_background_sound.load() #Загрузка музики 1 рівня
-                        #music.level1_background_sound.play(repeat=-1) #Початок гри музики 1 рівня
-                        list_create_world, list_rect = area.create_world(area.list_world_1) #Создавання матриці 1 рівня                      
+                        page_num = 1
+                        sprite.page.NAME_IMAGE = "game2/images/comix/page_1.png" 
+                        backstory = True #Создавання матриці 1 рівня                      
                         scene1 = False #Робимо сцену меню не дійсно завдяки чому меню закривається
                     #Умова натиснення на кнопку exit та вихід з гри завдяки робленню змінної game не дійсною
                     if settings.exit.RECT.collidepoint(click):
@@ -320,12 +324,12 @@ def run_game():
                 #Умова дій при натисненні на якусь частину екрану предісторії гри
                 if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                     click = event.pos #Змінна яка записує у себе координати натиснення ігрока
-                    # print(click) #Виведення координат натиснення ігрока
+                    print(click) #Виведення координат натиснення ігрока
                     #Умова відкриття наступної сторінк  при натисненні на кнопку стрілки вправо
                     if sprite.arrow1.RECT.collidepoint(click):
                         pages_time_black_time = 0
                         #Умова перегортання сторінки на наступну
-                        if page_num <= 2:
+                        if page_num <= 11:
                             page_num += 1
                             flag_black_pages = True
                     #Умова відкриття наступної сторінк  при натисненні на кнопку стрілки вліво
@@ -334,23 +338,48 @@ def run_game():
                         #Умова перегортання сторінки на минулу
                         if page_num >= 2:
                             page_num -= 1
+                            # print(page_num)
                             flag_black_pages = True
+                    if sprite.button_skip.RECT.collidepoint(click):
+                        page_num = 12
+                        sprite.page.NAME_IMAGE = "game2/images/comix/page_12.png" 
+                    if sprite.button_start.RECT.collidepoint(click):
+                        level1 = True #Змінна яка робить level1 дійсним за допомогою чого запускається 1 рівень
+                        music.menu_background_sound.stop() #Зупинення музику у меню
+                        music.menu_background_sound.unload() #Видалення музику у меню з гри на тей час поки в неї нема потреби
+                        music.level1_background_sound.load() #Загрузка музики 1 рівня
+                        music.level1_background_sound.play(repeat=-1) #Початок гри музики 1 рівня
+                        list_create_world, list_rect = area.create_world(area.list_world_1)
+                        backstory = False
+            settings.bg_menu.blit_sprite(win)
             #Відрисовка об'єктів предісторії
             sprite.page.blit_sprite(win) 
-            sprite.arrow1.blit_sprite(win) 
-            sprite.arrow2.blit_sprite(win)  
+            
+            # sprite.arrow1.blit_sprite(win) 
+            # sprite.arrow2.blit_sprite(win)  
+            if page_num == 12: 
+                sprite.button_start.blit_sprite(win)
+                sprite.arrow2.blit_sprite(win)
+            elif page_num == 1:
+                sprite.arrow1.blit_sprite(win) 
+                sprite.button_skip.blit_sprite(win)
+            else:
+                sprite.button_skip.blit_sprite(win) 
+                sprite.arrow1.blit_sprite(win) 
+                sprite.arrow2.blit_sprite(win)
             #Умова переходу з сторінки на сторінку
             if flag_black_pages:
                 pages_time_black_time += 1 #Лічильник часу переходу з сторінки на сторінку починає працювати
                 # sprite.black.blit_sprite(win)if sprite.arrow1.RECT.collidepoint(click):
                 #Умова відрисовки чорної картинки під час переходу коли лічильник pages_time_black_time буде мати значення менше за 50
-                if pages_time_black_time < 50:       
+                if pages_time_black_time < 25:    
+                    sprite.black.blit_sprite(win)   
                     sprite.page.NAME_IMAGE = "game2/images/comix/black.png"  
                     sprite.page.load_image() 
                 #Умова відрисовки сторінки під час переходу коли лічильник pages_time_black_time буде мати значення більше за 50
-                if pages_time_black_time >= 50:       
-                    sprite.page.NAME_IMAGE = f"game2/images/comix/page_{page_num}.png"  
-                    sprite.page.load_image()
+                if pages_time_black_time >= 25:       
+                    sprite.page.NAME_IMAGE = f"game2/images/comix/page_{page_num}.png" 
+            sprite.page.load_image()
                 # sprite.page.blit_sprite(win)  
          
         #Умова за якою відкривається 1 рівень гри
@@ -540,26 +569,8 @@ def run_game():
             event = pygame.key.get_pressed()
             #Умова проходження та закінчення 1 рівня та переходу до 2
             if sprite.sprite.EXIT_DOOR:
-                sprite.sprite.X = 330
-                sprite.sprite.Y = 600
-                sprite.sprite.MASK_ON = False
-                sprite.sprite.INJURED = False
-                sprite.mask.NAME_IMAGE = "game2/images/mask.png"
-                sprite.mask.load_image()
-                sprite.door.NAME_IMAGE = "game2/images/door.png"
-                sprite.door.load_image()
-                settings.injured.NAME_IMAGE = "game2/images/injured.png"
-                settings.injured.load_image()
-                level2 = True #Робимо level2 дійсним тим самим починаємо 2 рівень
-                list_create_world, list_rect = area.create_world(area.list_world_2)
-                #Змінення музики
-                music.level1_background_sound.stop()
-                music.level1_background_sound.unload()
-                # print(pygame.mixer.music.get_busy())
-                # music.level2_background_sound.load()
-                # music.level2_background_sound.play(repeat=-1)
-                level1 = False #Робимо level1 не дійсним тим самим закінчуємо 1 рівень
-                sprite.sprite.EXIT_DOOR = False
+                level1 = False
+                comix_2 = True
 
         #Умова за якою відкривається 2 рівень гри
         if level2: 
@@ -701,12 +712,9 @@ def run_game():
             #     sprite.dark.blit_sprite(win)
             #Умова закінчення 2 рівня та початку 3
             if sprite.flag_level_3:
-                level3 = True #Умова яка робить змінну яка відповідає за 3 рівень дійсною
-                list_create_world, list_rect = area.create_world(area.list_world_3)
-                level2 = False #Умова яка робить змінну яка відповідає за 2 рівень НЕ дійсною
-                #Змінення музики
-                music.level2_background_sound.stop()
-                music.level2_background_sound.unload()
+                level2 = False
+                comix_3 = True
+                
         
         #Умова за якою відкривається 3 рівень гри  
         if level3:
@@ -731,8 +739,11 @@ def run_game():
             if fire_flag:
                 if bg_fire_count < 150:
                     settings.bg.IMAGE = name_bg
-                if bg_fire_count > 150 and fire_anim_count < 1000:
-
+                if bg_fire_count > 150 and fire_anim_count < 800:
+                    if sprite.sprite_3.Y >= 565:
+                        music.level3.stop()
+                        death_scene3 = True
+                        level3 = False
                     if bg_fire_count > 150 and bg_fire_count < 155:
                         settings.bg.IMAGE = bg_with_fire_1
                     if bg_fire_count > 155 and bg_fire_count < 160:
@@ -743,8 +754,11 @@ def run_game():
                         settings.bg.IMAGE = bg_with_fire_4
                     if bg_fire_count == 170:
                         bg_fire_count = 150
-                if bg_fire_count > 150 and fire_anim_count < 2000 and fire_anim_count > 1000:
-                
+                if bg_fire_count > 150 and fire_anim_count < 1600 and fire_anim_count > 800:
+                    if sprite.sprite_3.Y >= 315:
+                        music.level3.stop()
+                        death_scene3 = True
+                        level3 = False
                     if bg_fire_count > 150 and bg_fire_count < 155:
                         settings.bg.IMAGE = bg_with_fire_5
                     if bg_fire_count > 155 and bg_fire_count < 160:
@@ -753,8 +767,11 @@ def run_game():
                         settings.bg.IMAGE = bg_with_fire_7
                     if bg_fire_count == 170:
                         bg_fire_count = 150  
-                if bg_fire_count > 150 and fire_anim_count > 2000:
-                
+                if bg_fire_count > 150 and fire_anim_count > 1600:
+                    if sprite.sprite_3.Y >= 180:
+                            music.level3.stop()
+                            death_scene3 = True
+                            level3 = False
                     if bg_fire_count > 150 and bg_fire_count < 155:
                         settings.bg.IMAGE = bg_with_fire_8
                     if bg_fire_count > 155 and bg_fire_count < 160:
@@ -946,6 +963,19 @@ def run_game():
                     sprite.blue.blit_blue()
                     sprite.blue.load_image()
                 except:
+                    sprite.fire1.FLAG_DEATH_FIRE = False
+                    sprite.fire2.FLAG_DEATH_FIRE = False
+                    sprite.fire3.FLAG_DEATH_FIRE = False
+                    sprite.fire4.FLAG_DEATH_FIRE = False
+                    sprite.fire5.FLAG_DEATH_FIRE = False
+                    sprite.fire6.FLAG_DEATH_FIRE = False
+                    sprite.fire7.FLAG_DEATH_FIRE = False
+                    sprite.fire8.FLAG_DEATH_FIRE = False
+                    sprite.fire9.FLAG_DEATH_FIRE = False
+                    sprite.fire10.FLAG_DEATH_FIRE = False
+                    sprite.fire11.FLAG_DEATH_FIRE = False
+                    sprite.fire12.FLAG_DEATH_FIRE = False
+                    sprite.fire13.FLAG_DEATH_FIRE = False
                     sprite.blue.BLUE = False
                     fire_flag = False
             sprite.sprite_3.door_collide(sprite.door_3)
@@ -1058,11 +1088,17 @@ def run_game():
                     sprite.pump_scale.Y += 1
                     sprite.pump_scale.load_image()
                 sprite.hole1.hole()
+                
             except:
-                print(111111)
+                # print(111111)
                 music.inflation_minigame.stop()
-                scene1 = True
+                death_scene4 = True
                 level4 = False
+            if sprite.pump_scale.HEIGHT >= 175:
+                    music.inflation_minigame.stop()
+                    # print(11111111)
+                    level4 = False
+                    win_1 = True
         if scene3:
             #Відрисовка об'єктів у розділі розробників
             settings.bg_developers.blit_sprite(win)
@@ -1143,12 +1179,129 @@ def run_game():
                         scene1 = True
                         death_scene3 = False
                     if sprite.button_one_more.RECT.collidepoint(click):
+                        sprite.fire1 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire2 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire3 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire4 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire5 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire6 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire7 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire8 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire9 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire10 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire11 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire12 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        sprite.fire13 = sprite.Sprite(x = 1500, y = 1500, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+                        fire_anim_count = 0
+                        bg_fire_count = 0
+                        sprite.sprite_3.X = 300
+                        sprite.sprite_3.Y = 650
+                        sprite.sprite_3.EXTING_ON = False
+                        sprite.sprite_3.COUNT_FIRE_POSITION = 0
+                        fire_count = 0
                         sprite.sprite_3.DEATH_FIRE = False
                         level3 = True
                         death_scene3 = False
             sprite.death.blit_sprite(win)
             sprite.button_menu.blit_sprite(win)
             sprite.button_one_more.blit_sprite(win)
+        if death_scene4:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                        game = False
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    click = event.pos
+                    print(click)
+                    if sprite.button_menu.RECT.collidepoint(click):
+                        scene1 = True
+                        death_scene1 = False
+                    if sprite.button_one_more.RECT.collidepoint(click):
+                        sprite.pump_scale.HEIGHT = 100
+                        sprite.pump_scale.Y = 250
+                        # sprite.object2.IMAGE = pygame.transform.rotate(sprite.object2.IMAGE, 180)
+                        sprite.pump_scale.load_image()
+                        level4 = True
+                        death_scene4 = False
+            sprite.death.blit_sprite(win)
+            sprite.button_menu.blit_sprite(win)
+            sprite.button_one_more.blit_sprite(win)
+        if comix_2:
+            for event in pygame.event.get():
+                #Умова виходу з гри при натисненні хрестику
+                if event.type == pygame.QUIT:
+                    game = False 
+                #Умова дій при натисненні на якусь частину екрану предісторії гри
+                if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                    click = event.pos #Змінна яка записує у себе координати натиснення ігрока
+                    print(click)
+                    if sprite.button_start.RECT.collidepoint(click):
+                        
+                            sprite.sprite.X = 330
+                            sprite.sprite.Y = 600
+                            sprite.sprite.MASK_ON = False
+                            sprite.sprite.INJURED = False
+                            sprite.mask.NAME_IMAGE = "game2/images/mask.png"
+                            sprite.mask.load_image()
+                            sprite.door.NAME_IMAGE = "game2/images/door.png"
+                            sprite.door.load_image()
+                            settings.injured.NAME_IMAGE = "game2/images/injured.png"
+                            settings.injured.load_image()
+                            level2 = True #Робимо level2 дійсним тим самим починаємо 2 рівень
+                            list_create_world, list_rect = area.create_world(area.list_world_2)
+                            #Змінення музики
+                            music.level1_background_sound.stop()
+                            music.level1_background_sound.unload()
+                            # print(pygame.mixer.music.get_busy())
+                            # music.level2_background_sound.load()
+                            # music.level2_background_sound.play(repeat=-1)
+                             #Робимо level1 не дійсним тим самим закінчуємо 1 рівень
+                            sprite.sprite.EXIT_DOOR = False
+                            comix_2 = False
+            sprite.page_level_2.blit_sprite(win)
+            sprite.button_start.blit_sprite(win)
+                
+        if comix_3:
+            
+            for event in pygame.event.get():
+                #Умова виходу з гри при натисненні хрестику
+                if event.type == pygame.QUIT:
+                    game = False 
+                #Умова дій при натисненні на якусь частину екрану предісторії гри
+                if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                    click = event.pos #Змінна яка записує у себе координати натиснення ігрока
+                    print(click)
+                    if sprite.button_start.RECT.collidepoint(click):
+                        level3 = True #Умова яка робить змінну яка відповідає за 3 рівень дійсною
+                        list_create_world, list_rect = area.create_world(area.list_world_3) 
+                        #Змінення музики
+                        music.level2_background_sound.stop()
+                        music.level2_background_sound.unload()
+                        comix_3 = False
+            sprite.page_level_3.blit_sprite(win)
+            sprite.button_start.blit_sprite(win)
+        if comix_4:
+            for event in pygame.event.get():
+                #Умова виходу з гри при натисненні хрестику
+                if event.type == pygame.QUIT:
+                    game = False 
+                #Умова дій при натисненні на якусь частину екрану предісторії гри
+                if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                    click = event.pos #Змінна яка записує у себе координати натиснення ігрока
+                    print(click)
+                    if sprite.button_start.RECT.collidepoint(click):
+                        level4 = True
+                        sprite.sprite_3.SCENE5 = False
+                        comix_4 = False
+            sprite.page_level_4.blit_sprite(win)
+            sprite.button_start.blit_sprite(win)
+        if win_1:
+            for event in pygame.event.get():
+                #Умова виходу з гри при натисненні хрестику
+                if event.type == pygame.QUIT:
+                    game = False 
+            level4 = False
+            music.win_1.play()
+            sprite.win_1.blit_sprite(win)
         #Оновлення екрану гри
         pygame.display.flip()
         #Задання ФПС гри
