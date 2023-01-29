@@ -33,14 +33,19 @@ class Settings:
     def blit_sprite(self,win):
         win.blit(self.IMAGE, (self.X,self.Y))
         # print(111111)
+    # def syren_bg(self):
+    #     self.NAME_IMAGE = "game2/images/background/bg_red.png"
+    # def bg(self):
+    #     self.NAME_IMAGE = "game2/images/background/bg.png"
 
 
     def draw_rect(self, win):
             pygame.draw.rect(win, self.COLOR, self.RECT)
 
-bg = Settings(x = 0,y = 0, width = 800, height = 800,name_image = "game2/images/bg.png")
+bg = Settings(x = 0,y = 0, width = 800, height = 800,name_image = "game2/images/background/bg.png")
 bg_pipes = Settings(x = 0,y = 0, width = 800, height = 800,name_image = "game2/images/pipes/bg_pipes.png")
 bg_menu = Settings(x = 0,y = 0, width = 800, height = 800,name_image = "game2/images/bg_menu_1.png")
+bg_minigame = Settings(x = 0,y = 0, width = 800, height = 800,name_image = "game2/images/bg_inglation_minigame.png")
 
 play = Settings(color =(255,0,0), x = 0,y = 0, width = 800, height = 800,name_image = "game2/images/play.png")
 play.RECT = pygame.Rect(470, 320, 300, 80)

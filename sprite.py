@@ -60,6 +60,13 @@ class Sprite(settings.Settings):
         self.BLIT_FIRE_5 = True
         self.BLIT_FIRE_6 = True
         self.BLIT_FIRE_7 = True
+        self.BLIT_FIRE_8 = True
+        self.BLIT_FIRE_9 = True
+        self.BLIT_FIRE_10 = True
+        self.BLIT_FIRE_11 = True
+        self.BLIT_FIRE_12 = True
+        self.BLIT_FIRE_13 = True
+        self.BLIT_FIRE_14 = True
         self.SCENE4 = False
         self.COUNT_FIRE_POSITION = 0
         self.EXTING_ON = False
@@ -71,9 +78,14 @@ class Sprite(settings.Settings):
         self.BLIT_FIRE_6 = True
         self.BLIT_FIRE_7 = True
         self.HOLE_COUNT = True
+        self.ENTER_DOOR = False
         self.TIME_HOLE_BLIT = 0
+        self.SCENE5 = False
+        self.BLUE = False
+        self.FLAG_BLUE = True
+        self.DEATH_FIRE = False
     def move_sprite(self):
-        if not self.MASK_ON and not self.INJURED:
+        if not self.MASK_ON and not self.INJURED and not self.EXTING_ON:
             event = pygame.key.get_pressed()
             if event[pygame.K_RIGHT] and self.X + self.WIDTH <= dicts.SETTINGS_WIN["WIDTH"]:
                 self.DIRECTION = 'R'
@@ -102,7 +114,7 @@ class Sprite(settings.Settings):
             elif self.ACTIVE_GRAVITY == False:
                 self.NAME_IMAGE = "game2/images/player/1.png"
                 self.direction()
-        if self.MASK_ON and not self.INJURED:
+        if self.MASK_ON and not self.INJURED and not self.EXTING_ON:
             event = pygame.key.get_pressed()
             if event[pygame.K_RIGHT] and self.X + self.WIDTH <= dicts.SETTINGS_WIN["WIDTH"]:
                 self.DIRECTION = 'R'
@@ -131,7 +143,7 @@ class Sprite(settings.Settings):
             elif self.ACTIVE_GRAVITY == False:
                 self.NAME_IMAGE = "game2/images/player_mask/1.png"
                 self.direction()
-        if self.INJURED:
+        if self.INJURED and not self.EXTING_ON:
             event = pygame.key.get_pressed()
             if event[pygame.K_RIGHT] and self.X + self.WIDTH <= dicts.SETTINGS_WIN["WIDTH"]:
                 self.DIRECTION = 'R'
@@ -160,9 +172,38 @@ class Sprite(settings.Settings):
             elif self.ACTIVE_GRAVITY == False:
                 self.NAME_IMAGE = "game2/images/player_with_injured/1.png"
                 self.direction()
+        if self.EXTING_ON:
+            event = pygame.key.get_pressed()
+            if event[pygame.K_RIGHT] and self.X + self.WIDTH <= dicts.SETTINGS_WIN["WIDTH"]:
+                self.DIRECTION = 'R'
+                if self.CAN_MOVE_RIGHT == True:
+                    self.X += self.STEP
+                    # walk_sound.WALK_SOUND.play()
+                    # self.RECT.x = self.RECT.x + self.STEP
+                    # self.RECT.x = self.RECT.x + self.STEP
+                # print(self.ACTIVE_GRAVITY, self.JUMP)
+                if self.ACTIVE_GRAVITY == False and self.JUMP == False:
+                    # print(1111111)
+                    # print("anim_right")
+                    self.animation(folder= "player_with_exting",count_while=5,last_img= 5, first_img=1) 
+            elif event[pygame.K_LEFT] and self.X + 1 >= 0:   
+               
+                self.DIRECTION = 'L'
+                if self.CAN_MOVE_LEFT == True:      
+                    self.X -= self.STEP      
+                    # self.can_move_left(list_rect)
+                    # self.RECT.x = self.RECT.x - self.STEP
+                if self.ACTIVE_GRAVITY == False and self.JUMP == False:
+                    # print("anim_left")
+                    self.animation(folder= "player_with_exting",count_while=5,last_img= 5, first_img=1)
+                    # walk_sound.WALK_SOUND.play()
+                    # self.RECT.x = self.RECT.x - self.STEP 
+            elif self.ACTIVE_GRAVITY == False:
+                self.NAME_IMAGE = "game2/images/player_with_exting/1.png"
+                self.direction()
      #
     def jump(self, list_rect):
-        if not self.MASK_ON and not self.INJURED:
+        if not self.MASK_ON and not self.INJURED and not self.EXTING_ON:
             # print(self.JUMP)
             event = pygame.key.get_pressed()
             #
@@ -206,7 +247,7 @@ class Sprite(settings.Settings):
 
                 # self.KEY_PRESSED = False
                 # self.COUNT_JUMP = 0
-        if self.MASK_ON and not self.INJURED:
+        if self.MASK_ON and not self.INJURED and not self.EXTING_ON:
             # print(self.JUMP)
             event = pygame.key.get_pressed()
             #
@@ -250,7 +291,7 @@ class Sprite(settings.Settings):
 
                 # self.KEY_PRESSED = False
                 # self.COUNT_JUMP = 0
-        if self.INJURED:
+        if self.INJURED and not self.EXTING_ON:
             # print(self.JUMP)
             event = pygame.key.get_pressed()
             #
@@ -294,6 +335,50 @@ class Sprite(settings.Settings):
 
                 # self.KEY_PRESSED = False
                 # self.COUNT_JUMP = 0   
+        if self.EXTING_ON:
+            # print(self.JUMP)
+            event = pygame.key.get_pressed()
+            #
+            if event[pygame.K_UP] and self.KEY_PRESSED == False:
+                self.KEY_PRESSED = True
+                # print(1111111111)
+            # if self.KEY_PRESSED == False:
+            #     print(self.COUNT_JUMP)
+            # if self.COUNT_JUMP > 30:
+            #     print(1111111111)
+            # print(self.COUNT_JUMP)
+
+            if self.KEY_PRESSED and self.COUNT_JUMP <= 30:
+                if self.COUNT_JUMP <= 25:
+                    self.NAME_IMAGE = "game2/images/player_with_exting/6.png"
+                else: 
+                    self.NAME_IMAGE = "game2/images/player_with_exting/8.png"
+                # self.animation(folder= "player",count_while=1,last_img= 6, first_img=4)
+                self.direction()
+                # print(self.COUNT_JUMP)
+                # print(self.KEY_PRESSED)
+                self.JUMP = True
+                self.COUNT_JUMP += 1
+                # self.RECT.y -= 11
+                self.Y -= 11
+                self.can_move_up(list_rect)
+                # print(self.COUNT_JUMP)
+            if self.COUNT_JUMP > 30 and self.COUNT_JUMP <= 35:
+                # print(1111111111)
+                # print(1111111111111111111111111111111)
+                self.COUNT_JUMP += 1
+                # print(self.COUNT_JUMP)
+                self.JUMP = False 
+                # if self.FLAG_GRAVITY_ANIMATION == True:
+                self.NAME_IMAGE = "game2/images/player_with_exting/8.png"
+                self.direction()
+            # if self.COUNT_JUMP > 35:
+            #     # self.JUMP = False 
+            #     self.NAME_IMAGE = "game2/images/player/6.png"
+            #     self.direction()
+
+                # self.KEY_PRESSED = False
+                # self.COUNT_JUMP = 0  
     def medic_move(self):
         if self.MEDIC_MOVE_LEFT == True:
                 self.DIRECTION = 'L'
@@ -323,7 +408,7 @@ class Sprite(settings.Settings):
         
 
     def gravity(self, list_rect, sprite = None):
-        if not self.MASK_ON and not self.INJURED:
+        if not self.MASK_ON and not self.INJURED and not self.EXTING_ON:
             # global flag_gravity_animation
 
             self.can_move_down(list_rect, sprite)
@@ -338,7 +423,7 @@ class Sprite(settings.Settings):
                     # flag_gravity_animation = True
                 # flag_gravity_animation = False
                 # self.animation(folder= "player",count_while=3,last_img= 3, first_img=1)
-        if self.MASK_ON and not self.INJURED:
+        if self.MASK_ON and not self.INJURED and not self.EXTING_ON:
             # global flag_gravity_animation
 
             self.can_move_down(list_rect, sprite)
@@ -353,7 +438,7 @@ class Sprite(settings.Settings):
                     # flag_gravity_animation = True
                 # flag_gravity_animation = False
                 # self.animation(folder= "player",count_while=3,last_img= 3, first_img=1)
-        if self.INJURED:
+        if self.INJURED and not self.EXTING_ON:
             # global flag_gravity_animation
 
             self.can_move_down(list_rect, sprite)
@@ -363,6 +448,21 @@ class Sprite(settings.Settings):
 
                     # print(11111111111)
                     self.NAME_IMAGE = "game2/images/player_with_injured/6.png"
+                    # self.load_image()
+                    self.direction()
+                    # flag_gravity_animation = True
+                # flag_gravity_animation = False
+                # self.animation(folder= "player",count_while=3,last_img= 3, first_img=1)
+        if self.EXTING_ON:
+            # global flag_gravity_animation
+
+            self.can_move_down(list_rect, sprite)
+            if self.ACTIVE_GRAVITY:
+                self.Y += self.GRAVITY
+                if sprite != None and self.JUMP == False and (self.COUNT_JUMP > 35 or self.COUNT_JUMP == 0):
+
+                    # print(11111111111)
+                    self.NAME_IMAGE = "game2/images/player_with_exting/6.png"
                     # self.load_image()
                     self.direction()
                     # flag_gravity_animation = True
@@ -435,8 +535,8 @@ class Sprite(settings.Settings):
             #         self.COUNT_JUMP = 41
             #         self.ACTIVE_GRAVITY = True
     def draw_text(self, win, key):
-        font = pygame.font.SysFont("kokila", 20)
-        follow = font.render(f"Натисніть {key} щоб взаємодіяти з предметами!", 1, (0,0,0))
+        font = pygame.font.SysFont("kokila", 25)
+        follow = font.render(f"Натисніть {key} щоб взаємодіяти з предметами!", 1, (255,255,255))
         win.blit(follow, (100, 200))
 
     def lever_collide(self, win):
@@ -480,14 +580,21 @@ class Sprite(settings.Settings):
         if event[pygame.K_t]:
             print(self.X)
     def door_collide(self, door):
+        event = pygame.key.get_pressed()
         if not self.OPEN_DOOR:
             if self.Y >= door.Y and self.Y + self.HEIGHT - 10 <= door.Y + door.HEIGHT:
                 # print(11111)
                 if self.X + self.WIDTH >= door.X:
+                    if self.ENTER_DOOR:
+                        self.draw_text(win, "F")
+                        if event[pygame.K_f]:
+                           self.SCENE5 = True 
+                    else:
+                        # print(1111)
                     # print(5555)
-                    self.CAN_MOVE_RIGHT = False
-                    self.X -= 3
-                    self.X -= 3
+                        self.CAN_MOVE_RIGHT = False
+                        self.X -= 3
+                        self.X -= 3
         if self.OPEN_DOOR:
             # print(1111)
             door.NAME_IMAGE = None
@@ -579,12 +686,20 @@ class Sprite(settings.Settings):
         global fire5
         global fire6
         global fire7
+        global fire8
+        global fire9
+        global fire10
+        global fire11
+        global fire12
+        global fire13
+
         self.COUNT_FIRE_POSITION += 1
+        
         if self.X <= fire.X + fire.WIDTH and self.X + self.WIDTH >= fire.X:
             # print(222222222222222)
             if self.Y + 30 >= fire.Y and self.Y + self.HEIGHT <= fire.Y + fire.HEIGHT + 30:
                 # print("012398")
-                pass
+                self.DEATH_FIRE = True
                 # pass
         if (self.Y + 10 <= fire.Y + fire.HEIGHT and self.Y + self.HEIGHT - 10 >= fire.Y) or (self.Y + 10 <= fire.Y + fire.HEIGHT and self.Y + self.HEIGHT - 10 >= fire.Y):
                 # print(block.HEIGHT, "23e43ed3sede")
@@ -614,21 +729,54 @@ class Sprite(settings.Settings):
                         if num_fire == 7:
                     
                             self.BLIT_FIRE_7 = False
+                        if num_fire == 8:
+                    
+                            self.BLIT_FIRE_8 = False
+                        if num_fire == 9:
+                    
+                            self.BLIT_FIRE_9 = False
+                        if num_fire == 10:
+                    
+                            self.BLIT_FIRE_10 = False
+                        if num_fire == 11:
+                    
+                            self.BLIT_FIRE_11 = False
+                        if num_fire == 12:
+                    
+                            self.BLIT_FIRE_12 = False
+                        if num_fire == 13:
+                    
+                            self.BLIT_FIRE_13 = False
+                    
+                        
                             # print(self.BLIT_FIRE_7)
         if self.COUNT_FIRE_POSITION == 350:
-            fire1 = Sprite(x = 400, y = 70, width = 80, height = 50, name_image = "game2/images/fire.png")
+            # print(111111)
+            fire1 = Sprite(x = 400, y = 70, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
         if self.COUNT_FIRE_POSITION == 700:
-            fire2 = Sprite(x = 720, y = 670, width = 80, height = 50, name_image = "game2/images/fire.png")
+            fire2 = Sprite(x = 720, y = 670, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
         if self.COUNT_FIRE_POSITION == 1050:
-            fire3 = Sprite(x = 0, y = 670, width = 80, height = 50, name_image = "game2/images/fire.png")
+            fire3 = Sprite(x = 0, y = 670, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
         if self.COUNT_FIRE_POSITION == 1400:
-            fire4 = Sprite(x = 100, y = 490, width = 80, height = 50, name_image = "game2/images/fire.png")
+            fire4 = Sprite(x = 100, y = 490, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
         if self.COUNT_FIRE_POSITION == 1750:
-            fire5 = Sprite(x = 100, y = 250, width = 80, height = 50, name_image = "game2/images/fire.png")
+            fire5 = Sprite(x = 100, y = 250, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
         if self.COUNT_FIRE_POSITION == 2100:
-            fire6 = Sprite(x = 720, y = 490, width = 80, height = 50, name_image = "game2/images/fire.png")
+            fire6 = Sprite(x = 650, y = 490, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
         if self.COUNT_FIRE_POSITION == 2450:
-            fire7 = Sprite(x = 400, y = 670, width = 80, height = 50, name_image = "game2/images/fire.png")
+            fire7 = Sprite(x = 400, y = 670, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+        if self.COUNT_FIRE_POSITION == 2800:
+            fire8 = Sprite(x = 200, y = 670, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+        if self.COUNT_FIRE_POSITION == 3150:
+            fire9 = Sprite(x = 200, y = 550, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+        if self.COUNT_FIRE_POSITION == 3500:
+            fire10 = Sprite(x = 300, y = 370, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+        if self.COUNT_FIRE_POSITION == 3850:
+            fire11 = Sprite(x = 270, y = 670, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+        if self.COUNT_FIRE_POSITION == 4200:
+            fire12 = Sprite(x = 320, y = 190, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
+        if self.COUNT_FIRE_POSITION == 4550:
+            fire13 = Sprite(x = 550, y = 490, width = 80, height = 50, name_image = "game2/images/fire/fire1.png")
     def panel_collide(self):
     #    if self.X <= panel.X + panel.WIDTH and self.X + self.WIDTH >= panel.X:
     #        print("123")
@@ -654,7 +802,9 @@ class Sprite(settings.Settings):
             if self.Y + 21 >= extinguisher.Y and self.Y + self.HEIGHT <= extinguisher.Y + extinguisher.HEIGHT + 20:
                 self.draw_text(win, "E")
                 if event[pygame.K_e]:
+                  self.NAME_IMAGE = "game2/images/player_with_exting/1.png"
                   self.EXTING_ON = True
+                  self.load_image()
     def shoot(self, win, count_while, sprite, list_rect):
             # global blit_bullet_count
             global bullet1
@@ -728,7 +878,7 @@ class Sprite(settings.Settings):
                 self.TIME_HOLE_BLIT = 0
                 self.HOLE_COUNT = False
         event = pygame.key.get_pressed()
-        font = pygame.font.SysFont("kokila", 20)
+        font = pygame.font.SysFont("kokila", 23)
         follow = font.render(f"{letter}", 1, (0,0,0))
         # print(letter)
         if letter == "q":
@@ -763,17 +913,34 @@ class Sprite(settings.Settings):
                 self.HOLE_COUNT = True
         if not self.HOLE_COUNT:
             win.blit(follow, (self.X, self.Y))
-
+    def blit_blue(self):
+        try:
+            if self.BLUE and self.FLAG_BLUE:
+                self.HEIGHT += 10
+            if self.HEIGHT > 800:
+                self.FLAG_BLUE = False   
+            if self.BLUE and not self.FLAG_BLUE:
+                self.HEIGHT -= 10
+                
+        except:
+            self.BLUE = False
                 
 
 
 sprite = Sprite(color = (0,0,0), x = 330, y = 600, width = 50, height = 60, name_image = "game2/images/player/1.png")
 smoke = Sprite(x = 0, y = 750, width = 50, height = 50, name_image = "game2/images/smoke.png")
 mask = Sprite(x = 5, y = 5, width = 30, height = 40, name_image = "game2/images/mask.png")
-door = Sprite(x = 520, y = 600, width = 120, height = 120, name_image = "game2/images/door.png")
-door_exit = Sprite(x = 600, y = 0, width = 120, height = 120, name_image = "game2/images/door.png")
+door = Sprite(x = 500, y = 600, width = 120, height = 120, name_image = "game2/images/door.png")
+door_exit = Sprite(x = 700, y = 0, width = 120, height = 120, name_image = "game2/images/door.png")
+# syren = Sprite(x = 0, y = 0, width = 800, height = 800, name_image = "game2/images/syren.png")
+
+
+
 medic_bot = Sprite(x = 20, y = 660, width = 50, height = 50, name_image = "game2/images/medic/1.png")
-sprite_2 = Sprite(color = (0,0,0), x = 300, y = 660, width = 50, height = 60, name_image = "game2/images/sprite.png")
+# dark = Sprite(x = 0, y = 0, width = 800, height = 800, name_image = "game2/images/dark.png")
+
+
+sprite_2 = Sprite(color = (0,0,0), x = 400, y = 500, width = 50, height = 60, name_image = "game2/images/sprite.png")
 sprite_3 = Sprite(color = (0,0,0), x = 300, y = 660, width = 50, height = 60, name_image = "game2/images/sprite.png")
 # bullet = Sprite(x = 100, y = 660, width = 50, height = 50, name_image = "game2/images/bullet.png")
 medic_escape = Sprite(x = 0, y = 0, width = 800, height = 800, name_image = "game2/images/medic_escape.png")
@@ -782,13 +949,21 @@ arrow2 = Sprite(x = 50, y = 700, width = 100, height = 150, name_image = "game2/
 page = Sprite(x = 50, y = 50, width = 700, height = 700, name_image = "game2/images/comix/page_1.png")
 black = Sprite(x = 0, y = 0, width = 800, height = 800, name_image = "game2/images/comix/black.png")
 #3 лвл. Вогонь
-fire1 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
-fire2 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
-fire3 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
-fire4 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
-fire5 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
-fire6 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
-fire7 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
+fire1 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire2 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire3 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire4 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire5 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire6 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire7 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire8 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire9 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire10 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire11 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire12 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+fire13 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire/fire1.png")
+# fire14 = Sprite(x = 0, y = 0, width = 0, height = 0, name_image = "game2/images/fire.png")
+blue = Sprite(x = 0, y = 0, width = 800, height = 0, name_image = "game2/images/blue.png")
 
 door_3 = Sprite(x = 520, y = 600, width = 120, height = 120, name_image = "game2/images/door.png")
 extinguisher = Sprite(x = 730, y = 490, width = 50, height = 50, name_image = "game2/images/extinguisher.png")
@@ -797,8 +972,13 @@ panel = Sprite(x = 535, y = 66, width = 50, height = 50, name_image = "game2/ima
 # pipe_2 = Sprite(x = 50, y = 400, width = 75, height = 75, name_image = "game2/images/pipes/pipe2.png")
 # pipe_3 = Sprite(x = 100, y = 100, width = 75, height = 75, name_image = "game2/images/pipes/pipe5.png")
 # pipe_4 = Sprite(x = 200, y = 200, width = 75, height = 75, name_image = "game2/images/pipes/pipe5.png")
-pump = Sprite(x = 550, y = 550, width = 200, height = 200, name_image = "game2/images/panel.png")
-pump_scale = Sprite(x = 580, y = 250, width = 60, height = 100, name_image = "game2/images/panel.png")
-boat = Sprite(x = 100, y = 250, width = 300, height = 500, name_image = "game2/images/panel.png")
+pump = Sprite(x = 550, y = 550, width = 200, height = 200, name_image = "game2/images/pump.png")
+pump_scale = Sprite(x = 580, y = 250, width = 60, height = 100, name_image = "game2/images/scale.png")
+boat = Sprite(x = 100, y = 250, width = 300, height = 500, name_image = "game2/images/boat.png")
 
-hole1 = Sprite(x = 0, y = 0, width = 50, height = 50, name_image = "game2/images/panel.png")
+hole1 = Sprite(x = 0, y = 0, width = 50, height = 50, name_image = "game2/images/hole1.png")
+
+
+death = Sprite(x = 0, y = 0, width = 800, height = 800, name_image = "game2/images/death.png")
+button_menu = Sprite(x = 130, y = 675, width = 250, height = 100, name_image = "game2/images/menu.png")
+button_one_more = Sprite(x = 420, y = 675, width = 250, height = 100, name_image = "game2/images/one_more.png")
