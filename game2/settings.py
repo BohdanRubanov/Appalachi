@@ -32,11 +32,6 @@ class Settings:
 
     def blit_sprite(self,win):
         win.blit(self.IMAGE, (self.X,self.Y))
-        # print(111111)
-    # def syren_bg(self):
-    #     self.NAME_IMAGE = "game2/images/background/bg_red.png"
-    # def bg(self):
-    #     self.NAME_IMAGE = "game2/images/background/bg.png"
 
 
     def draw_rect(self, win):

@@ -25,7 +25,7 @@ list_pipe_matrix = [
 dict_right_directions= {
     "0": 2,
     "1": 2,
-    "2": 1, #1
+    "2": 1, 
     "3": 4,
     "4": 1,
     "5": 1,
