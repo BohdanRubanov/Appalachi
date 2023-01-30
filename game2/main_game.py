@@ -105,7 +105,7 @@ level2 = False #2 рівень
 level3 = False #3 рівень
 scene3 = False #Розробники
 scene4 = False #Чорний экран
-level4 =  False #Мініігра надування лодки
+level4 =   False #Мініігра надування лодки
 death_scene1 = False
 death_scene2 = False
 death_scene3 = False
@@ -130,7 +130,7 @@ list_rect_pipes = []
 list_create_world = []
 list_rect = []
 list_pipes, list_rect_pipes = tubings.create_world(tubings.list_pipe_matrix)
-list_create_world, list_rect = area.create_world(area.list_world_2)
+list_create_world, list_rect = area.create_world(area.list_world_3)
 # area.create_world(area.list_world_2)
 # @profile
 #Головна функція гри у якій міститься майже все
@@ -656,7 +656,7 @@ def run_game():
                     move_medic_left = False
             #Умова у якій дається наказ переміщення медику вправ
             if move_medic_count == 150 and medic_right != 6 and move_medic_right == True:
-                print(4444444444)
+                # print(4444444444)
                 medic_left_count_1 = 0
                 sprite.medic_bot.MEDIC_MOVE_LEFT = False
                 sprite.medic_bot.MEDIC_MOVE_RIGHT = True
@@ -664,14 +664,14 @@ def run_game():
                 medic_right += 1
             #Переміщення медику вправо
             if medic_right == 1:
-                print(5555555555555555)
+                # print(5555555555555555)
                 if medic_right_count_1 != 1:
                     sprite.medic_bot.MEDIC_MOVE_RIGHT = False
                     sprite.medic_bot.X = 750
                     sprite.medic_bot.Y = 70
             #Умова змінення позиції медику на мапі
             if medic_right == 3:
-                print(666666666666)
+                # print(666666666666)
                 if medic_right_count_2 != 1:
                     sprite.medic_bot.MEDIC_MOVE_RIGHT = False
                     sprite.medic_bot.X = 750
@@ -679,7 +679,7 @@ def run_game():
                     medic_right_count_2 += 1
             #Умова змінення позиції медику на мапі
             if medic_right == 5:
-                print(77777777777777)
+                # print(77777777777777)
                 if medic_right_count_3 != 1:
                     sprite.medic_bot.MEDIC_MOVE_RIGHT = False
                     sprite.medic_bot.X = 750
@@ -691,7 +691,7 @@ def run_game():
                     medic_right_count_3 += 1
             #Умова змінення позиції медику на мапі
             if last_medic_time_move > 2250 and last_medic_time_move_count < 3:
-                print(88888888888888)
+                # print(88888888888888)
                 sprite.medic_bot.X = 0
                 sprite.medic_bot.Y = 660
                 last_medic_time_move = 0
@@ -719,6 +719,7 @@ def run_game():
         #Умова за якою відкривається 3 рівень гри  
         if level3:
             music.level3.play()
+            music.menu_background_sound.stop()
             #Цикл всіх івентів у 3 рівні гри
             for event in pygame.event.get():
                 #Умова виходу з гри при натисненні хрестику
@@ -785,120 +786,226 @@ def run_game():
                 el.blit_sprite(win)
             if fire_count < 5:
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 350:
-                    # print(11111)
-                    sprite.fire1.IMAGE = fire_img1
+                    if not sprite.fire1.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_1 = True
+                        # print(11111)
+                        sprite.fire1.IMAGE = fire_img1
                 # print(sprite.fire1.IMAGE)
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 700:
-                    sprite.fire2.IMAGE = fire_img1
+                    if not sprite.fire2.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_2 = True
+                        sprite.fire2.IMAGE = fire_img1
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1050:
-                    sprite.fire3.IMAGE = fire_img1
+                    if not sprite.fire3.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_3 = True
+                        sprite.fire3.IMAGE = fire_img1
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1400:
-                    sprite.fire4.IMAGE = fire_img1
+                    if not sprite.fire4.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_4 = True
+                        sprite.fire4.IMAGE = fire_img1
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1750:
-                    sprite.fire5.IMAGE = fire_img1
+                    if not sprite.fire5.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_5 = True
+                        sprite.fire5.IMAGE = fire_img1
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2100:
-                    sprite.fire6.IMAGE = fire_img1
+                    if not sprite.fire6.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_6 = True
+                        sprite.fire6.IMAGE = fire_img1
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2450:
-                    sprite.fire7.IMAGE = fire_img1
+                    if not sprite.fire7.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_7 = True
+                        sprite.fire7.IMAGE = fire_img1
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2800:
-                    sprite.fire8.IMAGE = fire_img1
+                    if not sprite.fire8.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_8 = True
+                        sprite.fire8.IMAGE = fire_img1
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3150:
-                    sprite.fire9.IMAGE = fire_img1
+                    if not sprite.fire9.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_9 = True
+                        sprite.fire9.IMAGE = fire_img1
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3500:
-                    sprite.fire10.IMAGE = fire_img1
+                    if not sprite.fire10.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_10 = True
+                        sprite.fire10.IMAGE = fire_img1
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3850:
-                    sprite.fire11.IMAGE = fire_img1
+                    if not sprite.fire11.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_11 = True
+                        sprite.fire11.IMAGE = fire_img1
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 4200:
-                    sprite.fire12.IMAGE = fire_img1
+                    if not sprite.fire12.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_12 = True
+                        sprite.fire12.IMAGE = fire_img1
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 4550:
-                    sprite.fire13.IMAGE = fire_img1
+                    if not sprite.fire13.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_13 = True
+                        sprite.fire13.IMAGE = fire_img1
             if fire_count > 5 and fire_count < 10:
+                if not sprite.fire1.NO_FIRE:
+                    sprite.fire1.BLIT_FIRE_1 = True
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 350:
+                    if not sprite.fire1.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_1 = True
                     # print(11111)
-                    sprite.fire1.IMAGE = fire_img2
+                        sprite.fire1.IMAGE = fire_img2
                 # print(sprite.fire1.IMAGE)
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 700:
-                    sprite.fire2.IMAGE = fire_img2
+                    if not sprite.fire2.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_2 = True
+                        sprite.fire2.IMAGE = fire_img2
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1050:
-                    sprite.fire3.IMAGE = fire_img2
+                    if not sprite.fire3.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_3 = True
+                        sprite.fire3.IMAGE = fire_img2
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1400:
-                    sprite.fire4.IMAGE = fire_img2
+                    if not sprite.fire4.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_4 = True
+                        sprite.fire4.IMAGE = fire_img2
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1750:
-                    sprite.fire5.IMAGE = fire_img2
+                    if not sprite.fire5.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_5 = True
+                        sprite.fire5.IMAGE = fire_img2
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2100:
-                    sprite.fire6.IMAGE = fire_img2
+                    if not sprite.fire6.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_6 = True
+                        sprite.fire6.IMAGE = fire_img2
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2450:
-                    sprite.fire7.IMAGE = fire_img2
+                    if not sprite.fire7.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_7 = True
+                        sprite.fire7.IMAGE = fire_img2
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2800:
-                    sprite.fire8.IMAGE = fire_img2
+                    if not sprite.fire8.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_8 = True
+                        sprite.fire8.IMAGE = fire_img2
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3150:
-                    sprite.fire9.IMAGE = fire_img2
+                    if not sprite.fire9.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_9 = True
+                        sprite.fire9.IMAGE = fire_img2
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3500:
-                    sprite.fire10.IMAGE = fire_img2
+                    if not sprite.fire10.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_10 = True
+                        sprite.fire10.IMAGE = fire_img2
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3850:
-                    sprite.fire11.IMAGE = fire_img2
+                    if not sprite.fire11.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_11 = True
+                        sprite.fire11.IMAGE = fire_img2
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 4200:
-                    sprite.fire12.IMAGE = fire_img2
+                    if not sprite.fire12.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_12 = True
+                        sprite.fire12.IMAGE = fire_img2
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 4550:
-                    sprite.fire13.IMAGE = fire_img2
+                    if not sprite.fire13.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_13 = True
+                        sprite.fire13.IMAGE = fire_img2
             if fire_count > 10 and fire_count < 15:
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 350:
-                    # print(11111)
-                    sprite.fire1.IMAGE = fire_img3
+                    if not sprite.fire1.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_1 = True
+                        # print(11111)
+                        sprite.fire1.IMAGE = fire_img3
                 # print(sprite.fire1.IMAGE)
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 700:
-                    sprite.fire2.IMAGE = fire_img3
+                    if not sprite.fire2.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_2 = True
+                        sprite.fire2.IMAGE = fire_img3
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1050:
-                    sprite.fire3.IMAGE = fire_img3
+                    if not sprite.fire3.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_3 = True
+                        sprite.fire3.IMAGE = fire_img3
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1400:
-                    sprite.fire4.IMAGE = fire_img3
+                    if not sprite.fire4.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_4 = True
+                        sprite.fire4.IMAGE = fire_img3
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1750:
-                    sprite.fire5.IMAGE = fire_img3
+                    if not sprite.fire5.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_5 = True
+                        sprite.fire5.IMAGE = fire_img3
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2100:
-                    sprite.fire6.IMAGE = fire_img3
+                    if not sprite.fire6.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_6 = True
+                        sprite.fire6.IMAGE = fire_img3
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2450:
-                    sprite.fire7.IMAGE = fire_img3
+                    if not sprite.fire7.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_7 = True
+                        sprite.fire7.IMAGE = fire_img3
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2800:
-                    sprite.fire8.IMAGE = fire_img3
+                    if not sprite.fire8.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_8 = True
+                        sprite.fire8.IMAGE = fire_img3
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3150:
-                    sprite.fire9.IMAGE = fire_img3
+                    if not sprite.fire9.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_9 = True
+                        sprite.fire9.IMAGE = fire_img3
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3500:
-                    sprite.fire10.IMAGE = fire_img3
+                    if not sprite.fire10.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_10 = True
+                        sprite.fire10.IMAGE = fire_img3
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3850:
-                    sprite.fire11.IMAGE = fire_img3
+                    if not sprite.fire11.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_11 = True
+                        sprite.fire11.IMAGE = fire_img3
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 4200:
-                    sprite.fire12.IMAGE = fire_img3
+                    if not sprite.fire12.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_12 = True
+                        sprite.fire12.IMAGE = fire_img3
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 4550:
-                    sprite.fire13.IMAGE = fire_img3
+                    if not sprite.fire13.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_13 = True
+                        sprite.fire13.IMAGE = fire_img3
             if fire_count > 15 and fire_count < 20:
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 350:
-                    # print(11111)
-                    sprite.fire1.IMAGE = fire_img4
+                    if not sprite.fire1.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_1 = True
+                        # print(11111)
+                        sprite.fire1.IMAGE = fire_img4
                 # print(sprite.fire1.IMAGE)
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 700:
-                    sprite.fire2.IMAGE = fire_img4
+                    if not sprite.fire2.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_2 = True
+                        sprite.fire2.IMAGE = fire_img4
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1050:
-                    sprite.fire3.IMAGE = fire_img4
+                    if not sprite.fire3.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_3 = True
+                        sprite.fire3.IMAGE = fire_img4
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1400:
-                    sprite.fire4.IMAGE = fire_img4
+                    if not sprite.fire4.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_4 = True
+                        sprite.fire4.IMAGE = fire_img4
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 1750:
-                    sprite.fire5.IMAGE = fire_img4
+                    if not sprite.fire5.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_5 = True
+                        sprite.fire5.IMAGE = fire_img4
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2100:
-                    sprite.fire6.IMAGE = fire_img4
+                    if not sprite.fire6.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_6 = True
+                        sprite.fire6.IMAGE = fire_img4
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2450:
-                    sprite.fire7.IMAGE = fire_img4
+                    if not sprite.fire7.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_7 = True
+                        sprite.fire7.IMAGE = fire_img4
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 2800:
-                    sprite.fire8.IMAGE = fire_img4
+                    if not sprite.fire8.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_8 = True
+                        sprite.fire8.IMAGE = fire_img4
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3150:
-                    sprite.fire9.IMAGE = fire_img4
+                    if not sprite.fire9.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_9 = True
+                        sprite.fire9.IMAGE = fire_img4
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3500:
-                    sprite.fire10.IMAGE = fire_img4
+                    if not sprite.fire10.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_10 = True
+                        sprite.fire10.IMAGE = fire_img4
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 3850:
-                    sprite.fire11.IMAGE = fire_img4
+                    if not sprite.fire11.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_11 = True
+                        sprite.fire11.IMAGE = fire_img4
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 4200:
-                    sprite.fire12.IMAGE = fire_img4
+                    if not sprite.fire12.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_12 = True
+                        sprite.fire12.IMAGE = fire_img4
                 if sprite.sprite_3.COUNT_FIRE_POSITION >= 4550:
-                    sprite.fire13.IMAGE = fire_img4
+                    if not sprite.fire13.NO_FIRE:
+                        sprite.sprite_3.BLIT_FIRE_13 = True
+                        sprite.fire13.IMAGE = fire_img4
             if fire_count == 20:
                 fire_count = 0
             # print(sprite.fire1.IMAGE)
@@ -1147,6 +1254,8 @@ def run_game():
                         scene1 = True
                         death_scene2 = False
                     if sprite.button_one_more.RECT.collidepoint(click):
+                        music.level2_background_sound.load()
+                        music.level2_background_sound.play(repeat=-1)
                         sprite.medic_bot.MEDIC_MOVE_RIGHT = False
                         sprite.medic_bot.MEDIC_MOVE_LEFT = False
                         sprite.sprite_2.X = 400
@@ -1220,6 +1329,7 @@ def run_game():
                         sprite.pump_scale.Y = 250
                         # sprite.object2.IMAGE = pygame.transform.rotate(sprite.object2.IMAGE, 180)
                         sprite.pump_scale.load_image()
+                        music.menu_background_sound.stop()
                         level4 = True
                         death_scene4 = False
             sprite.death.blit_sprite(win)
@@ -1292,6 +1402,9 @@ def run_game():
                         level4 = True
                         sprite.sprite_3.SCENE5 = False
                         comix_4 = False
+                        music.menu_background_sound.stop()
+                        sprite.blue.BLUE = False
+                        sprite.blue.FLAG_BLUE = False
             sprite.page_level_4.blit_sprite(win)
             sprite.button_start.blit_sprite(win)
         if win_1:
@@ -1300,6 +1413,10 @@ def run_game():
                 if event.type == pygame.QUIT:
                     game = False 
             level4 = False
+            music.inflation_minigame.stop()
+            music.menu_background_sound.stop()
+            music.pipes_minigame.stop()
+            music.level3.stop()
             music.win_1.play()
             sprite.win_1.blit_sprite(win)
         #Оновлення екрану гри

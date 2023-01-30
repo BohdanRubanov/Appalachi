@@ -85,6 +85,7 @@ class Sprite(settings.Settings):
         self.FLAG_BLUE = True
         self.DEATH_FIRE = False
         self.FLAG_DEATH_FIRE = True
+        self.NO_FIRE = False
     def move_sprite(self):
         if not self.MASK_ON and not self.INJURED and not self.EXTING_ON:
             event = pygame.key.get_pressed()
@@ -709,55 +710,62 @@ class Sprite(settings.Settings):
                         self.draw_text(win, "E")
                         if event[pygame.K_e]:
                             if num_fire == 1:
+                                fire.NO_FIRE = True
                                 # print(1)
                                 self.BLIT_FIRE_1 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 2:
+                                fire.NO_FIRE = True
                                 # print(2)
                                 self.BLIT_FIRE_2 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 3:
+                                fire.NO_FIRE = True
                                 # print(3)
                                 self.BLIT_FIRE_3 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 4:
+                                fire.NO_FIRE = True
                                 # print(4)
                                 self.BLIT_FIRE_4 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 5:
+                                fire.NO_FIRE = True
                                 # print(5)
                                 self.BLIT_FIRE_5 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 6:
+                                fire.NO_FIRE = True
                                 # print(6)
                                 self.BLIT_FIRE_6 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 7:
+                                fire.NO_FIRE = True
                             
                                 self.BLIT_FIRE_7 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 8:
-                            
+                                fire.NO_FIRE = True
                                 self.BLIT_FIRE_8 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 9:
-                            
+                                fire.NO_FIRE = True
                                 self.BLIT_FIRE_9 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 10:
-                            
+                                fire.NO_FIRE = True
                                 self.BLIT_FIRE_10 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 11:
-                            
+                                fire.NO_FIRE = True
                                 self.BLIT_FIRE_11 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 12:
-                            
+                                fire.NO_FIRE = True
                                 self.BLIT_FIRE_12 = False
                                 fire.FLAG_DEATH_FIRE = False
                             if num_fire == 13:
-                            
+                                fire.NO_FIRE = True
                                 self.BLIT_FIRE_13 = False  
                                 fire.FLAG_DEATH_FIRE = False 
                                 # print(self.BLIT_FIRE_7)
