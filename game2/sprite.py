@@ -383,7 +383,7 @@ class Sprite(settings.Settings):
                     self.load_image()
                     settings.injured.IMAGE = None
                     settings.injured.NAME_IMAGE = None
-                    self.INJURED = TrueW
+                    self.INJURED = True
     def door_collide(self, door):
         event = pygame.key.get_pressed()
         if not self.OPEN_DOOR:
